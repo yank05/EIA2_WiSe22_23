@@ -42,7 +42,7 @@ namespace Words {
         _randomNumber = Math.floor(Math.random() * _objects.length);  
         let _randomObjects: string[] = _objects.splice(_randomNumber, 1); 
 
-        _verse = _randomSubjects + " " + _randomVerbs + " " + _randomObjects 
+        _verse = _randomSubjects + " " + _randomVerbs + " " + _randomObjects; 
         return _verse; 
     }
 } 
