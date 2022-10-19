@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+}
+
+#div0 {
+    height: 75%;
+    width: 45%; 
+    margin-left: 30px;
+    position: relative;
+    float: left; 
+    background-color: lightgray;
+}
+
+#div1 {
+    height: 75%;
+    width: 45%;
+    margin-right: 30px;
+    position: relative; 
+    float: right;
+    background-color: lightgray;
+}
