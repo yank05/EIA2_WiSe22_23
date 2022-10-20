@@ -4,18 +4,27 @@ html, body {
 
 #div0 {
     height: 75%;
-    width: 45%; 
-    margin-left: 30px;
-    position: relative;
+    width: 45%;
+    margin-left: 40px; 
     float: left; 
     background-color: lightgray;
 }
 
 #div1 {
     height: 75%;
-    width: 45%;
-    margin-right: 30px;
-    position: relative; 
-    float: right;
-    background-color: lightgray;
+    width: 45%; 
+    margin-right: 40px;
+    float: right; 
+    background-color: lightgrey;
+}
+
+
+#mouseFollower {
+    position: fixed;
+    width: 15%;
+    background-color: white;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: black;
+    pointer-events: none;
 }

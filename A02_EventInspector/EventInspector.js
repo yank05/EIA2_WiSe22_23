@@ -16,19 +16,21 @@ var EventInspector;
         div1.addEventListener("keyup", logInfo);
     }
     function setInfoBox(_event) {
-        let x = _event.offsetX;
-        let y = _event.offsetY;
-        let area = _event.target;
-        let span = document.createElement("span");
-        area.appendChild(span);
+        let span = document.querySelector("span");
+        let x = _event.clientX;
+        let y = _event.clientY;
+        let target = _event.target;
+        span.setAttribute("id", "mouseFollower");
         span.style.left = x + "px";
         span.style.top = y + "px";
-        span.style.height = "50px";
-        span.style.width = "50px";
-        span.style.backgroundColor = "black";
+        span.innerHTML = "X-Position: " + x + "<br> Y-Position: " + y + "<br> Target: " + target;
     }
-    function logInfo() {
-        console.log("Hallo");
+    function logInfo(_event) {
+        let type = _event.type;
+        let target = _event.target;
+        let currentTargt = _event.currentTarget;
+        let object = _event;
+        console.log(type, target, currentTargt, object);
     }
 })(EventInspector || (EventInspector = {}));
 //# sourceMappingURL=EventInspector.js.map

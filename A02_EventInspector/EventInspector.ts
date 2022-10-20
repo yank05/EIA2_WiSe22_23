@@ -1,10 +1,10 @@
 namespace EventInspector {
     window.addEventListener("load", handleLoad); 
 
-    function handleLoad(_event: Event) {
-        let body = document.querySelector("body");
-        let div0 = document.querySelector("div#div0");
-        let div1 = document.querySelector("div#div1");
+    function handleLoad(_event: Event): void {
+        let body: HTMLElement = document.querySelector("body");
+        let div0: HTMLElement = document.querySelector("div#div0");
+        let div1: HTMLElement = document.querySelector("div#div1");
 
         document.addEventListener("mousemove", setInfoBox); 
 
@@ -20,23 +20,25 @@ namespace EventInspector {
     }
 
     function setInfoBox(_event: MouseEvent): void {
-        let x: Number = _event.offsetX;
-        let y: Number = _event.offsetY; 
-        let area: HTMLElement = <HTMLElement>_event.target;
-        let span: HTMLSpanElement = document.createElement("span"); 
-        area.appendChild(span); 
-        
+        let span: HTMLSpanElement = document.querySelector("span");
+        let x: Number = _event.clientX;
+        let y: Number = _event.clientY;
+        let target: HTMLElement = <HTMLElement>_event.target;  
+
+        span.setAttribute("id", "mouseFollower");  
+
         span.style.left = x + "px";
         span.style.top = y + "px";
-        span.style.height = "50px";
-        span.style.width = "50px";
-        span.style.backgroundColor = "black"; 
-
+        span.innerHTML = "X-Position: " + x + "<br> Y-Position: " + y + "<br> Target: " + target;
     }
+
     
-    function logInfo(): void {
-        console.log("Hallo"); 
+    function logInfo(_event: Event): void {
+        let type: String = _event.type; 
+        let target: HTMLElement = <HTMLElement>_event.target; 
+        let currentTargt: HTMLElement = <HTMLElement>_event.currentTarget; 
+        let object: Event = _event; 
+        
+        console.log(type, target, currentTargt, object); 
 }
-
-
 }
