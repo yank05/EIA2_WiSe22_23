@@ -5,6 +5,7 @@ namespace EventInspector {
         let body: HTMLElement = document.querySelector("body");
         let div0: HTMLElement = document.querySelector("div#div0");
         let div1: HTMLElement = document.querySelector("div#div1");
+        let button: HTMLElement = document.querySelector("button"); 
 
         document.addEventListener("mousemove", setInfoBox); 
 
@@ -17,6 +18,8 @@ namespace EventInspector {
         body.addEventListener("keyup", logInfo);  
         div0.addEventListener("keyup", logInfo);
         div1.addEventListener("keyup", logInfo);
+
+        button.addEventListener("click", buttonEvent);
     }
 
     function setInfoBox(_event: MouseEvent): void {
@@ -40,5 +43,12 @@ namespace EventInspector {
         let object: Event = _event; 
         
         console.log(type, target, currentTargt, object); 
-}
+    }
+
+    function buttonEvent(_event: Event): void {
+            let layers: EventTarget[] = _event.composedPath();
+            if (layers[4] == document) {
+            console.log(_event);
+        }
+    }
 }
