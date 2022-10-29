@@ -8,19 +8,32 @@
     <script src="ShoppingList.js"></script>
     <title>Shopping List</title>
 </head>
-<body>
     <h3>Add Item</h3>
     <div id="addfield">
-        <input type="text" id="itemname" name="itemname" placeholder="Enter item...">
-        <input type="number" id="amount" name="amount" placeholder="Enter amount...">
-        <input type="text" id="comment" name="comment" placeholder="Enter comment...">
-        <button type="button" id="add">Add</button>
+        <form>
+        <fieldset id="fieldset">
+            <input type="text" name="newItem" placeholder="Add item..."/>
+            <input type="number" name="Amount" placeholder="Add amount..."/>
+            <input name="Comment" placeholder="Add comment..."/> 
+            <button id="add">Add Item</button>
+        </fieldset>
+        </form>
     </div>
-    <h3>List</h3>
-    <div id="list">
 
+    <h3>Shopping List</h3>
+    <li id="list">
+        <div id="lister">
+            <input id="bought" type="checkbox">
 
-    </div>
-    
+            <div id="ItemData">
+                <p class="ItemDataFont">Brot</p>
+                <p class="ItemDataFont">1</p>
+                <p class="ItemDataFont">Bauernbrot</p>
+                <p class="ItemDataFont">27.10.22</p>
+            </div>
+                <button id="edit">Edit</button>
+                <button id="delete">Delete</button>
+        </div>
+    </li>
 </body>
 </html>
