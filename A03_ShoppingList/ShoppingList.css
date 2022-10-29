@@ -41,7 +41,6 @@ input {
     height: max-content;
     width: max-content;
     text-align: center;
-    cursor: pointer;
     border-style: solid;
     border-color: black;
     border-width: 2px;

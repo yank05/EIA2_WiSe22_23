@@ -2,6 +2,7 @@ namespace ShoppingList {
     window.addEventListener("load", handleLoad);
 
     function handleLoad(): void {
+        
         let addButton: HTMLButtonElement = document.querySelector("button#add");
         addButton.addEventListener("click", itemAdd); 
 
