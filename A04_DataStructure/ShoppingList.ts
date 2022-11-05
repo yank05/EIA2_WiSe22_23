@@ -1,8 +1,10 @@
-// Quellen: https://stackoverflow.com/questions/30607419/return-only-numbers-from-string
+// Quellen von nachrecherchierten Codefragmenten: https://stackoverflow.com/questions/30607419/return-only-numbers-from-string
 // https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
 // In Zusammenarbeit mit Jonas Atzenhofer und Robert Schindler
 
 namespace ShoppingList_04 {
+    let itemNumber: number = 0; 
+
     window.addEventListener("load", handleLoad);
 
     function handleLoad(): void {
@@ -10,16 +12,7 @@ namespace ShoppingList_04 {
         let addButton: HTMLButtonElement = document.querySelector("button#add");
         addButton.addEventListener("click", itemAdd); 
 
-        let checkBought: HTMLElement = document.querySelector("input#bought1");
-        checkBought.addEventListener("change", itemBought); 
-
-        let editButton: HTMLButtonElement = document.querySelector("button#edit1"); 
-        editButton.addEventListener("click", editItem);
-
-        let deleteButton: HTMLButtonElement = document.querySelector("button#delete1");
-        deleteButton.addEventListener("click", deleteItem); 
     }
-
     function itemAdd(): void {
         let formData: FormData = new FormData(document.querySelector("form"));
         let newItem: FormDataEntryValue = formData.get("newItem"); 
@@ -27,19 +20,20 @@ namespace ShoppingList_04 {
         let comment: FormDataEntryValue = formData.get("comment"); 
         let bought: boolean = false; 
         let date: string = "30.02.2222"; 
-        let itemNumber: number = 0; 
         itemNumber++;
 
         let list: HTMLElement = document.getElementById("list");
 
         let newDiv: HTMLDivElement = document.createElement("div");
         newDiv.setAttribute("class", "lister"); 
+        newDiv.setAttribute("id", "lister" + itemNumber); 
 
         let newInput: HTMLInputElement = document.createElement("input"); 
         newDiv.appendChild(newInput); 
         newInput.setAttribute("class", "bought"); 
         newInput.setAttribute("id", "bought" + itemNumber); 
         newInput.setAttribute("type", "checkbox");
+        newInput.addEventListener("change", itemBought); 
 
         let divItemData: HTMLDivElement = document.createElement("div");
         newDiv.appendChild(divItemData); 
@@ -72,6 +66,7 @@ namespace ShoppingList_04 {
         editButton.setAttribute("id", "edit" + itemNumber);
         editButton.setAttribute("type", "button");
         editButton.innerHTML = "edit"; 
+        editButton.addEventListener("click", editItem);
 
         let deleteButton: HTMLButtonElement = document.createElement("button");
         newDiv.appendChild(deleteButton); 
@@ -79,8 +74,10 @@ namespace ShoppingList_04 {
         deleteButton.setAttribute("id", "delete" + itemNumber);
         deleteButton.setAttribute("type", "button"); 
         deleteButton.innerHTML = "delete"; 
+        deleteButton.addEventListener("click", deleteItem); 
 
         list.appendChild(newDiv); 
+
 
         // console.log(newItem, amount, comment, bought, date); 
 
@@ -99,8 +96,14 @@ namespace ShoppingList_04 {
         console.log(triggerNumber); 
     }
 
-    function deleteItem(): void {
-        console.log("Item löschen"); 
+    function deleteItem(_event: Event): void {
+        let trigger: string = (_event.target as HTMLButtonElement).id
+        let triggerNum: string = trigger.replace(/\D/g, "");
+        let identifyer: number = parseInt(triggerNum); 
+
+        let list: HTMLElement = document.getElementById("list");
+        let remIt: HTMLElement = document.getElementById("lister" + identifyer);
+        list.removeChild(remIt); 
     }
 
 }
