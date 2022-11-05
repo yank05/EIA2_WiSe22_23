@@ -1,6 +1,6 @@
 // Quellen von nachrecherchierten Codefragmenten: https://stackoverflow.com/questions/30607419/return-only-numbers-from-string
 // https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
-// In Zusammenarbeit mit Jonas Atzenhofer und Robert Schindler
+// In Zusammenarbeit mit Jonas Atzenhofer, Robert Schindler und Henning Pils
 var ShoppingList_04;
 (function (ShoppingList_04) {
     let itemNumber = 0;
