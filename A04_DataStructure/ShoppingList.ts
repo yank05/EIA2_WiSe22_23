@@ -86,14 +86,14 @@ namespace ShoppingList_04 {
     function itemBought(_event: Event): void {
         let trigger: string = (_event.target as HTMLInputElement).id;
         let triggerNum: string =  trigger.replace(/\D/g, "");
-        let identifyer: number = parseInt(triggerNum); 
-        console.log(data[identifyer]); 
+        let identifyer: number = parseInt(triggerNum);
+        //to be continued
     }
 
     function editItem(_event: Event): void {
         let trigger: string = (_event.target as HTMLButtonElement).id;
         let triggerNumber: string =  trigger.replace(/\D/g, "");
-        console.log(triggerNumber); 
+        //to be continued
     }
 
     function deleteItem(_event: Event): void {

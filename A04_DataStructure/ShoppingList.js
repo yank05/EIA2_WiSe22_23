@@ -68,12 +68,12 @@ var ShoppingList_04;
         let trigger = _event.target.id;
         let triggerNum = trigger.replace(/\D/g, "");
         let identifyer = parseInt(triggerNum);
-        console.log(ShoppingList_04.data[identifyer]);
+        //to be continued
     }
     function editItem(_event) {
         let trigger = _event.target.id;
         let triggerNumber = trigger.replace(/\D/g, "");
-        console.log(triggerNumber);
+        //to be continued
     }
     function deleteItem(_event) {
         let trigger = _event.target.id;
