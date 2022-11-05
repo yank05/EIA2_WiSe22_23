@@ -1,6 +1,6 @@
 // Quellen: https://stackoverflow.com/questions/30607419/return-only-numbers-from-string
 // https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
-// In Zusammenarbeit mit Jonas Atzenhofer, Robert Schindler
+// In Zusammenarbeit mit Jonas Atzenhofer und Robert Schindler
 var ShoppingList_04;
 (function (ShoppingList_04) {
     window.addEventListener("load", handleLoad);
@@ -62,7 +62,7 @@ var ShoppingList_04;
         deleteButton.setAttribute("class", "delete");
         deleteButton.setAttribute("id", "delete" + itemNumber);
         deleteButton.setAttribute("type", "button");
-        editButton.innerHTML = "delete";
+        deleteButton.innerHTML = "delete";
         list.appendChild(newDiv);
         // console.log(newItem, amount, comment, bought, date); 
     }

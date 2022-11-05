@@ -48,10 +48,13 @@ input {
 }
 
 #list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em; 
     position: relative;
     margin: auto;
     width: max-content;
-    height: 5em;
+    height: max-content;
     width: max-content; 
     display: flex;
     align-content: center;
