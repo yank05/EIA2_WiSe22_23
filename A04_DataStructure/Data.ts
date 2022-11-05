@@ -2,8 +2,8 @@ namespace ShoppingList_04 {
 
     export interface ItemAdded {
         newItem: string;
-        Amount: number;
-        Comment: string; 
+        amount: number;
+        comment: string; 
         bought: boolean; 
         date: string; 
     }
@@ -13,9 +13,11 @@ namespace ShoppingList_04 {
     }
 
     export let data: Data = {
-        0: [
-            {newItem: "Brot", Amount: 1, Comment: "Bauernbrot", bought: false, date: "27.10.22"}
+        1: [
+            { newItem: "Brot", amount: 1, comment: "Bauernbrot", bought: false, date: "27.10.22" }
+        ], 
+        2: [
+            { newItem: "booooob", amount: 1, comment: "Bauernbrot", bought: false, date: "27.10.22" }
         ]
-
     }; 
 }

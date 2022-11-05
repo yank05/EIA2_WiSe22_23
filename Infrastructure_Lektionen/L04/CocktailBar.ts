@@ -27,23 +27,23 @@ namespace L04_CocktailBar {
         order.innerHTML = "";
 
         let formData: FormData = new FormData(<HTMLFormElement>document.querySelector("form"));
-
+        console.log(formData); 
         // console.group("Order");
         for (let entry of formData) {
-            // console.log(entry);
-            let selector: string = "[value='" + entry[1] + "']"; // "[name='" + entry[0] + "'][value='" + entry[1] + "']";
-            let item: HTMLInputElement = <HTMLInputElement>document.querySelector(selector);
-            let itemPrice: number = Number(item.getAttribute("price"));
-            switch (entry[0]) {
-                case "Amount":
+         // console.log(entry);
+             let selector: string = "[value='" + entry[1] + "']"; // "[name='" + entry[0] + "'][value='" + entry[1] + "']";
+             let item: HTMLInputElement = <HTMLInputElement>document.querySelector(selector);
+             let itemPrice: number = Number(item.getAttribute("price"));
+             switch (entry[0]) {
+                 case "Amount":
                     break;
                 case "Drink":
-                    let amount: number = Number(formData.get("Amount"));
-                    itemPrice = amount * itemPrice;
-                    order.innerHTML += amount + " L " + item.value + ": €" + itemPrice + "<br>";
-                    break;
-                default:
-                    order.innerHTML += item.value + ": €" + itemPrice.toFixed(2) + "<br>";
+                     let amount: number = Number(formData.get("Amount"));
+                     itemPrice = amount * itemPrice;
+                     order.innerHTML += amount + " L " + item.value + ": €" + itemPrice + "<br>";
+                     break;
+                 default:
+                     order.innerHTML += item.value + ": €" + itemPrice.toFixed(2) + "<br>";
             }
             // console.log(item);
             price += itemPrice;

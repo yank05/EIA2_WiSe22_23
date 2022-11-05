@@ -20,6 +20,7 @@ var L04_CocktailBar;
         let order = document.querySelector("div#order");
         order.innerHTML = "";
         let formData = new FormData(document.querySelector("form"));
+        console.log(formData);
         // console.group("Order");
         for (let entry of formData) {
             // console.log(entry);

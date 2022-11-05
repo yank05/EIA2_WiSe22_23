@@ -58,7 +58,7 @@ input {
     justify-content: center;
 }
 
-#lister {
+.lister {
     display: flex;
     align-content: center;
     justify-content: center;
@@ -71,7 +71,7 @@ input {
     border-radius: 15px;
 }
 
-#bought {
+.bought {
     height: 2em;
     width: 2em;
     margin: auto;
@@ -79,7 +79,7 @@ input {
     margin-right: 5%;
 }
 
-#ItemData {
+.ItemData {
     position: relative;
     height: 100%;
     width: 100%;
@@ -93,7 +93,7 @@ input {
     font-size: 1.25em; 
 }
 
-#edit {
+.edit {
     width: max-content;
     margin: auto;
     height: 2em;
@@ -101,7 +101,7 @@ input {
 
 }
 
-#delete {
+.delete {
     width: max-content;
     margin: auto;
     height: 2em;

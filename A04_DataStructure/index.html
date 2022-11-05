@@ -10,30 +10,29 @@
     <title>Shopping List</title>
 </head>
     <h3>Add Item</h3>
+<form>
     <div id="addfield">
-        <form>
         <fieldset id="fieldset">
             <input type="text" name="newItem" placeholder="Add item..."/>
-            <input type="number" name="Amount" placeholder="Add amount..."/>
-            <input name="Comment" placeholder="Add comment..."/> 
+            <input type="number" name="amount" placeholder="Add amount..."/>
+            <input name="comment" placeholder="Add comment..."/> 
             <button type="button" id="add">Add Item</button>
         </fieldset>
-        </form>
     </div>
+</form>
 
     <h3>Shopping List</h3>
     <li id="list">
-        <div id="lister">
-            <input id="bought" type="checkbox">
-
-            <div id="ItemData">
+        <div class="lister">
+            <input id="bought1"class="bought" type="checkbox">
+            <div class="ItemData" id="ItemData1">
                 <p class="ItemDataFont">Brot</p>
                 <p class="ItemDataFont">1</p>
                 <p class="ItemDataFont">Bauernbrot</p>
                 <p class="ItemDataFont">27.10.22</p>
             </div>
-                <button type="button" id="edit">Edit</button>
-                <button type="button" id="delete">Delete</button>
+                <button type="button" class="edit" id="edit1">Edit</button>
+                <button type="button" class="delete" id="delete1">Delete</button>
         </div>
     </li>
 </body>
