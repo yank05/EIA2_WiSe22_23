@@ -1,3 +1,12 @@
+/*
+Aufgabe: Client_L05
+Name: Yannik König
+Matrikel: 271124
+Datum: 10.11.2022
+Quellen von nachrecheriertem Code: https://tutorial.eyehunts.com/js/javascript-get-a-date-without-time-display-example/
+*/
+
+
 namespace ShoppingList_05 {
     let itemNumber: number = 0;
     var date: Date = new Date(); 
