@@ -40,27 +40,35 @@ namespace ShoppingList_05 {
         divItemData.setAttribute("class", "ItemData");
         divItemData.setAttribute("id", "ItemData" + itemNumber);
 
-        let newItemField: HTMLElement = document.createElement("p");
-        divItemData.appendChild(newItemField);
-        newItemField.setAttribute("class", "ItemDataFont");
-        newItemField.innerHTML = (newItem as string);
+        addElement(divItemData);
 
-        let amountField: HTMLElement = document.createElement("p");
-        divItemData.appendChild(amountField);
-        amountField.setAttribute("class", "ItemDataFont");
-        amountField.innerHTML = (amount as string);
+        // let newItemField: HTMLElement = document.createElement("p");
+        // divItemData.appendChild(newItemField);
+        // newItemField.setAttribute("class", "ItemDataFont");
+        // newItemField.innerHTML = (newItem as string);
 
-        let commentField: HTMLElement = document.createElement("p");
-        divItemData.appendChild(commentField);
-        commentField.setAttribute("class", "ItemDataFont");
-        commentField.innerHTML = (comment as string);
+        addElement(divItemData, newItem.toString());
+
+        // let amountField: HTMLElement = document.createElement("p");
+        // divItemData.appendChild(amountField);
+        // amountField.setAttribute("class", "ItemDataFont");
+        // amountField.innerHTML = (amount as string);
+
+        addElement(divItemData, amount.toString());
+
+        // let commentField: HTMLElement = document.createElement("p");
+        // divItemData.appendChild(commentField);
+        // commentField.setAttribute("class", "ItemDataFont");
+        // commentField.innerHTML = (comment as string);
+
+        addElement(divItemData, comment.toString()); 
+
+        // let dateField: HTMLElement = document.createElement("p");
+        // divItemData.appendChild(dateField);
+        // dateField.setAttribute("class", "ItemDataFont");
+        // dateField.innerHTML = (date as string);
 
         addElement(divItemData, date); 
-
-        let dateField: HTMLElement = document.createElement("p");
-        divItemData.appendChild(dateField);
-        dateField.setAttribute("class", "ItemDataFont");
-        dateField.innerHTML = (date as string);
 
         let editButton: HTMLButtonElement = document.createElement("button");
         newDiv.appendChild(editButton);
@@ -85,7 +93,7 @@ namespace ShoppingList_05 {
 
     }
 
-    function addElement(_parent: HTMLElement, _content?: string) {
+    function addElement(_parent: HTMLElement, _content?: string): void {
         let newItemField: HTMLElement = document.createElement("p");
         _parent.appendChild(newItemField);
         newItemField.setAttribute("class", "ItemDataFont");

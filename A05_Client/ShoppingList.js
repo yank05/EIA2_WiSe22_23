@@ -1,8 +1,8 @@
 // Quellen von nachrecherchierten Codefragmenten: https://stackoverflow.com/questions/30607419/return-only-numbers-from-string
 // https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
 // In Zusammenarbeit mit Jonas Atzenhofer, Robert Schindler und Henning Pils
-var ShoppingList_04;
-(function (ShoppingList_04) {
+var ShoppingList_05;
+(function (ShoppingList_05) {
     let itemNumber = 0;
     window.addEventListener("load", handleLoad);
     function handleLoad() {
@@ -31,23 +31,27 @@ var ShoppingList_04;
         newDiv.appendChild(divItemData);
         divItemData.setAttribute("class", "ItemData");
         divItemData.setAttribute("id", "ItemData" + itemNumber);
-        let newItemField = document.createElement("p");
-        divItemData.appendChild(newItemField);
-        newItemField.setAttribute("class", "ItemDataFont");
-        newItemField.innerHTML = newItem;
-        let amountField = document.createElement("p");
-        divItemData.appendChild(amountField);
-        amountField.setAttribute("class", "ItemDataFont");
-        amountField.innerHTML = amount;
-        let commentField = document.createElement("p");
-        divItemData.appendChild(commentField);
-        commentField.setAttribute("class", "ItemDataFont");
-        commentField.innerHTML = comment;
+        addElement(divItemData);
+        // let newItemField: HTMLElement = document.createElement("p");
+        // divItemData.appendChild(newItemField);
+        // newItemField.setAttribute("class", "ItemDataFont");
+        // newItemField.innerHTML = (newItem as string);
+        addElement(divItemData, newItem.toString());
+        // let amountField: HTMLElement = document.createElement("p");
+        // divItemData.appendChild(amountField);
+        // amountField.setAttribute("class", "ItemDataFont");
+        // amountField.innerHTML = (amount as string);
+        addElement(divItemData, amount.toString());
+        // let commentField: HTMLElement = document.createElement("p");
+        // divItemData.appendChild(commentField);
+        // commentField.setAttribute("class", "ItemDataFont");
+        // commentField.innerHTML = (comment as string);
+        addElement(divItemData, comment.toString());
+        // let dateField: HTMLElement = document.createElement("p");
+        // divItemData.appendChild(dateField);
+        // dateField.setAttribute("class", "ItemDataFont");
+        // dateField.innerHTML = (date as string);
         addElement(divItemData, date);
-        let dateField = document.createElement("p");
-        divItemData.appendChild(dateField);
-        dateField.setAttribute("class", "ItemDataFont");
-        dateField.innerHTML = date;
         let editButton = document.createElement("button");
         newDiv.appendChild(editButton);
         editButton.setAttribute("class", "edit");
@@ -92,5 +96,5 @@ var ShoppingList_04;
         let remIt = document.getElementById("lister" + identifyer);
         list.removeChild(remIt);
     }
-})(ShoppingList_04 || (ShoppingList_04 = {}));
+})(ShoppingList_05 || (ShoppingList_05 = {}));
 //# sourceMappingURL=ShoppingList.js.map
