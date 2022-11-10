@@ -1,5 +1,7 @@
 namespace ShoppingList_05 {
     let itemNumber: number = 0;
+    var date: Date = new Date(); 
+    var dateNoTime: string = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear(); 
 
     window.addEventListener("load", handleLoad);
 
@@ -39,8 +41,33 @@ namespace ShoppingList_05 {
         let newDiv: HTMLDivElement = document.createElement("div");
         let newInput: HTMLInputElement = document.createElement("input");
         let divItemData: HTMLDivElement = document.createElement("div");
+
+
+        createInput(newInput, newDiv); 
+
+        createDiv(newDiv); 
+
+        createItemDiv(divItemData, newDiv); 
+
+        addElement(divItemData);
+
+        addElement(divItemData, newItem.toString());
+
+        addElement(divItemData, amount.toString());
+
+        addElement(divItemData, comment.toString()); 
+
+        addElement(divItemData, dateNoTime); 
+
+        addButton(newDiv, "edit"); 
+
+        addButton(newDiv, "delete"); 
+
+        list.appendChild(newDiv);
+
+
     }
-    function itemAdd(): void {
+    async function itemAdd(): Promise<void> {
         let formData: FormData = new FormData(document.querySelector("form"));
         let newItem: FormDataEntryValue = formData.get("newItem");
         let amount: FormDataEntryValue = formData.get("amount");
@@ -49,8 +76,6 @@ namespace ShoppingList_05 {
         let newDiv: HTMLDivElement = document.createElement("div");
         let newInput: HTMLInputElement = document.createElement("input");
         let divItemData: HTMLDivElement = document.createElement("div");
-        let date: Date = new Date(); 
-        date.setHours(0, 0, 0, 0);
         itemNumber++;
 
         createInput(newInput, newDiv); 
@@ -67,13 +92,17 @@ namespace ShoppingList_05 {
 
         addElement(divItemData, comment.toString()); 
 
-        addElement(divItemData); 
+        addElement(divItemData, dateNoTime); 
 
         addButton(newDiv, "edit"); 
 
         addButton(newDiv, "delete"); 
 
         list.appendChild(newDiv);
+
+        let query: URLSearchParams = new URLSearchParams(<any>formData);
+        await fetch("index.html?" + query.toString());
+        alert("Item added!");
 
     }
 
@@ -145,6 +174,13 @@ namespace ShoppingList_05 {
         let list: HTMLElement = document.getElementById("list");
         let remIt: HTMLElement = document.getElementById("lister" + identifyer);
         list.removeChild(remIt);
+    }
+
+    function dateMaker(_date: Date): void {
+        let year: () => number = _date.getFullYear; 
+        let month: () => number = _date.getMonth;
+        let day = _date.getDay;
+        console.log(month);
     }
 
 }

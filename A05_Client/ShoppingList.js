@@ -1,6 +1,8 @@
 var ShoppingList_05;
 (function (ShoppingList_05) {
     let itemNumber = 0;
+    var date = new Date();
+    var dateNoTime = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
     window.addEventListener("load", handleLoad);
     async function handleLoad(_event) {
         let addButton = document.querySelector("button#add");
@@ -20,8 +22,19 @@ var ShoppingList_05;
         let newDiv = document.createElement("div");
         let newInput = document.createElement("input");
         let divItemData = document.createElement("div");
+        createInput(newInput, newDiv);
+        createDiv(newDiv);
+        createItemDiv(divItemData, newDiv);
+        addElement(divItemData);
+        addElement(divItemData, newItem.toString());
+        addElement(divItemData, amount.toString());
+        addElement(divItemData, comment.toString());
+        addElement(divItemData, dateNoTime);
+        addButton(newDiv, "edit");
+        addButton(newDiv, "delete");
+        list.appendChild(newDiv);
     }
-    function itemAdd() {
+    async function itemAdd() {
         let formData = new FormData(document.querySelector("form"));
         let newItem = formData.get("newItem");
         let amount = formData.get("amount");
@@ -30,8 +43,6 @@ var ShoppingList_05;
         let newDiv = document.createElement("div");
         let newInput = document.createElement("input");
         let divItemData = document.createElement("div");
-        let date = new Date();
-        date.setHours(0, 0, 0, 0);
         itemNumber++;
         createInput(newInput, newDiv);
         createDiv(newDiv);
@@ -40,10 +51,13 @@ var ShoppingList_05;
         addElement(divItemData, newItem.toString());
         addElement(divItemData, amount.toString());
         addElement(divItemData, comment.toString());
-        addElement(divItemData);
+        addElement(divItemData, dateNoTime);
         addButton(newDiv, "edit");
         addButton(newDiv, "delete");
         list.appendChild(newDiv);
+        let query = new URLSearchParams(formData);
+        await fetch("index.html?" + query.toString());
+        alert("Item added!");
     }
     function addElement(_parent, _content) {
         let newItemField = document.createElement("p");
@@ -105,6 +119,12 @@ var ShoppingList_05;
         let list = document.getElementById("list");
         let remIt = document.getElementById("lister" + identifyer);
         list.removeChild(remIt);
+    }
+    function dateMaker(_date) {
+        let year = _date.getFullYear;
+        let month = _date.getMonth;
+        let day = _date.getDay;
+        console.log(month);
     }
 })(ShoppingList_05 || (ShoppingList_05 = {}));
 //# sourceMappingURL=ShoppingList.js.map
