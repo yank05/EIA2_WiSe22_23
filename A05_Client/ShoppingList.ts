@@ -9,8 +9,8 @@ Quellen von nachrecheriertem Code: https://tutorial.eyehunts.com/js/javascript-g
 
 namespace ShoppingList_05 {
     let itemNumber: number = 0;
-    var date: Date = new Date(); 
-    var dateNoTime: string = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear(); 
+    let date: Date = new Date(); 
+    let dateNoTime: string = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear(); 
 
     window.addEventListener("load", handleLoad);
 
@@ -183,13 +183,6 @@ namespace ShoppingList_05 {
         let list: HTMLElement = document.getElementById("list");
         let remIt: HTMLElement = document.getElementById("lister" + identifyer);
         list.removeChild(remIt);
-    }
-
-    function dateMaker(_date: Date): void {
-        let year: () => number = _date.getFullYear; 
-        let month: () => number = _date.getMonth;
-        let day = _date.getDay;
-        console.log(month);
     }
 
 }

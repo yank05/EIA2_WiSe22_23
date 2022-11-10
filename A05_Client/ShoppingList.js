@@ -1,8 +1,15 @@
+/*
+Aufgabe: Client_L05
+Name: Yannik König
+Matrikel: 271124
+Datum: 10.11.2022
+Quellen von nachrecheriertem Code: https://tutorial.eyehunts.com/js/javascript-get-a-date-without-time-display-example/
+*/
 var ShoppingList_05;
 (function (ShoppingList_05) {
     let itemNumber = 0;
-    var date = new Date();
-    var dateNoTime = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+    let date = new Date();
+    let dateNoTime = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
     window.addEventListener("load", handleLoad);
     async function handleLoad(_event) {
         let addButton = document.querySelector("button#add");
@@ -119,12 +126,6 @@ var ShoppingList_05;
         let list = document.getElementById("list");
         let remIt = document.getElementById("lister" + identifyer);
         list.removeChild(remIt);
-    }
-    function dateMaker(_date) {
-        let year = _date.getFullYear;
-        let month = _date.getMonth;
-        let day = _date.getDay;
-        console.log(month);
     }
 })(ShoppingList_05 || (ShoppingList_05 = {}));
 //# sourceMappingURL=ShoppingList.js.map
