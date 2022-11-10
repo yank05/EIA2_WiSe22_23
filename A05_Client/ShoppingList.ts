@@ -18,78 +18,35 @@ namespace ShoppingList_05 {
         let newItem: FormDataEntryValue = formData.get("newItem");
         let amount: FormDataEntryValue = formData.get("amount");
         let comment: FormDataEntryValue = formData.get("comment");
+        let list: HTMLElement = document.getElementById("list");
+        let newDiv: HTMLDivElement = document.createElement("div");
+        let newInput: HTMLInputElement = document.createElement("input");
+        let divItemData: HTMLDivElement = document.createElement("div");
         let bought: boolean = false;
         let date: string = "30.02.2222";
         itemNumber++;
 
-        let list: HTMLElement = document.getElementById("list");
+        createInput(newInput, newDiv); 
 
-        let newDiv: HTMLDivElement = document.createElement("div");
-        newDiv.setAttribute("class", "lister");
-        newDiv.setAttribute("id", "lister" + itemNumber);
+        createDiv(newDiv); 
 
-        let newInput: HTMLInputElement = document.createElement("input");
-        newDiv.appendChild(newInput);
-        newInput.setAttribute("class", "bought");
-        newInput.setAttribute("id", "bought" + itemNumber);
-        newInput.setAttribute("type", "checkbox");
-        newInput.addEventListener("change", itemBought);
-
-        let divItemData: HTMLDivElement = document.createElement("div");
-        newDiv.appendChild(divItemData);
-        divItemData.setAttribute("class", "ItemData");
-        divItemData.setAttribute("id", "ItemData" + itemNumber);
+        createItemDiv(divItemData, newDiv); 
 
         addElement(divItemData);
 
-        // let newItemField: HTMLElement = document.createElement("p");
-        // divItemData.appendChild(newItemField);
-        // newItemField.setAttribute("class", "ItemDataFont");
-        // newItemField.innerHTML = (newItem as string);
-
         addElement(divItemData, newItem.toString());
-
-        // let amountField: HTMLElement = document.createElement("p");
-        // divItemData.appendChild(amountField);
-        // amountField.setAttribute("class", "ItemDataFont");
-        // amountField.innerHTML = (amount as string);
 
         addElement(divItemData, amount.toString());
 
-        // let commentField: HTMLElement = document.createElement("p");
-        // divItemData.appendChild(commentField);
-        // commentField.setAttribute("class", "ItemDataFont");
-        // commentField.innerHTML = (comment as string);
-
         addElement(divItemData, comment.toString()); 
-
-        // let dateField: HTMLElement = document.createElement("p");
-        // divItemData.appendChild(dateField);
-        // dateField.setAttribute("class", "ItemDataFont");
-        // dateField.innerHTML = (date as string);
 
         addElement(divItemData, date); 
 
-        let editButton: HTMLButtonElement = document.createElement("button");
-        newDiv.appendChild(editButton);
-        editButton.setAttribute("class", "edit");
-        editButton.setAttribute("id", "edit" + itemNumber);
-        editButton.setAttribute("type", "button");
-        editButton.innerHTML = "edit";
-        editButton.addEventListener("click", editItem);
+        addButton(newDiv, "edit"); 
 
-        let deleteButton: HTMLButtonElement = document.createElement("button");
-        newDiv.appendChild(deleteButton);
-        deleteButton.setAttribute("class", "delete");
-        deleteButton.setAttribute("id", "delete" + itemNumber);
-        deleteButton.setAttribute("type", "button");
-        deleteButton.innerHTML = "delete";
-        deleteButton.addEventListener("click", deleteItem);
+        addButton(newDiv, "delete"); 
 
         list.appendChild(newDiv);
-
-
-        // console.log(newItem, amount, comment, bought, date); 
 
     }
 
@@ -99,10 +56,47 @@ namespace ShoppingList_05 {
         newItemField.setAttribute("class", "ItemDataFont");
         if (_content) {
             newItemField.innerHTML = (_content as string);
+        }
 
+    }
+
+    function addButton(_parent: HTMLElement, _identify: string): void {
+        let newButton: HTMLElement = document.createElement("button");
+        _parent.appendChild(newButton);
+        newButton.setAttribute("class", _identify);
+        newButton.setAttribute("id", _identify + itemNumber);
+        newButton.setAttribute("type", "button");
+        newButton.innerHTML = _identify;
+        switch (_identify) {
+            case "edit":
+                newButton.addEventListener("click", editItem);
+                break;
+            case "delete": 
+                newButton.addEventListener("click", deleteItem);
+            default:
+                break;
         }
     }
 
+    function createDiv(_element: HTMLElement): void {
+        _element.setAttribute("class", "lister");
+        _element.setAttribute("id", "lister" + itemNumber);
+    }
+
+    function createInput(_element: HTMLElement, _parent: HTMLElement): void {
+        _parent.appendChild(_element);
+        _element.setAttribute("class", "bought");
+        _element.setAttribute("id", "bought" + itemNumber);
+        _element.setAttribute("type", "checkbox");
+        _element.addEventListener("change", itemBought);
+    }
+
+    function createItemDiv(_element: HTMLElement, _parent: HTMLElement): void {
+        _parent.appendChild(_element);
+        _element.setAttribute("class", "ItemData");
+        _element.setAttribute("id", "ItemData" + itemNumber);
+    }; 
+    
     function itemBought(_event: Event): void {
         let trigger: string = (_event.target as HTMLInputElement).id;
         let triggerNum: string = trigger.replace(/\D/g, "");
