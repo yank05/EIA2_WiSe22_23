@@ -1,13 +1,25 @@
-// Quellen von nachrecherchierten Codefragmenten: https://stackoverflow.com/questions/30607419/return-only-numbers-from-string
-// https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
-// In Zusammenarbeit mit Jonas Atzenhofer, Robert Schindler und Henning Pils
 var ShoppingList_05;
 (function (ShoppingList_05) {
     let itemNumber = 0;
     window.addEventListener("load", handleLoad);
-    function handleLoad() {
+    async function handleLoad(_event) {
         let addButton = document.querySelector("button#add");
         addButton.addEventListener("click", itemAdd);
+        let response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
+        let item = await response.text();
+        let data = JSON.parse(item);
+        generateExistingItem(data);
+    }
+    function generateExistingItem(_data) {
+        let values = _data[1];
+        console.log(values[0].newItem);
+        let newItem = values[0].newItem;
+        let amount = values[0].amount;
+        let comment = values[0].comment;
+        let list = document.getElementById("list");
+        let newDiv = document.createElement("div");
+        let newInput = document.createElement("input");
+        let divItemData = document.createElement("div");
     }
     function itemAdd() {
         let formData = new FormData(document.querySelector("form"));
@@ -18,8 +30,8 @@ var ShoppingList_05;
         let newDiv = document.createElement("div");
         let newInput = document.createElement("input");
         let divItemData = document.createElement("div");
-        let bought = false;
-        let date = "30.02.2222";
+        let date = new Date();
+        date.setHours(0, 0, 0, 0);
         itemNumber++;
         createInput(newInput, newDiv);
         createDiv(newDiv);
@@ -28,7 +40,7 @@ var ShoppingList_05;
         addElement(divItemData, newItem.toString());
         addElement(divItemData, amount.toString());
         addElement(divItemData, comment.toString());
-        addElement(divItemData, date);
+        addElement(divItemData);
         addButton(newDiv, "edit");
         addButton(newDiv, "delete");
         list.appendChild(newDiv);

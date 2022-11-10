@@ -5,7 +5,7 @@ namespace L05_CocktailBar {
     async function handleLoad(_event: Event): Promise<void> {
         console.log("Init");
 
-        let response: Response = await fetch("Data.json");
+        let response: Response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
         let offer: string = await response.text();
         let data: Data = JSON.parse(offer);
 

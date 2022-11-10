@@ -1,17 +1,44 @@
-// Quellen von nachrecherchierten Codefragmenten: https://stackoverflow.com/questions/30607419/return-only-numbers-from-string
-// https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
-// In Zusammenarbeit mit Jonas Atzenhofer, Robert Schindler und Henning Pils
-
 namespace ShoppingList_05 {
     let itemNumber: number = 0;
 
     window.addEventListener("load", handleLoad);
 
-    function handleLoad(): void {
+    interface ItemAdded {
+        newItem: string;
+        amount: number;
+        comment: string; 
+        bought: boolean; 
+        date: string; 
+    }
+
+    interface Data {
+        [1]: ItemAdded[]; 
+    }
+
+    async function handleLoad(_event: Event): Promise<void> {
 
         let addButton: HTMLButtonElement = document.querySelector("button#add");
         addButton.addEventListener("click", itemAdd);
 
+        let response: Response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
+        let item: string = await response.text();
+        let data: Data = JSON.parse(item);
+
+        generateExistingItem(data); 
+
+    }
+
+    function generateExistingItem(_data: Data): void {
+        let values: ItemAdded[] = _data[1];
+        console.log(values[0].newItem);  
+
+        let newItem: string = values[0].newItem;
+        let amount: number = values[0].amount;
+        let comment: string = values[0].comment;
+        let list: HTMLElement = document.getElementById("list");
+        let newDiv: HTMLDivElement = document.createElement("div");
+        let newInput: HTMLInputElement = document.createElement("input");
+        let divItemData: HTMLDivElement = document.createElement("div");
     }
     function itemAdd(): void {
         let formData: FormData = new FormData(document.querySelector("form"));
@@ -22,8 +49,8 @@ namespace ShoppingList_05 {
         let newDiv: HTMLDivElement = document.createElement("div");
         let newInput: HTMLInputElement = document.createElement("input");
         let divItemData: HTMLDivElement = document.createElement("div");
-        let bought: boolean = false;
-        let date: string = "30.02.2222";
+        let date: Date = new Date(); 
+        date.setHours(0, 0, 0, 0);
         itemNumber++;
 
         createInput(newInput, newDiv); 
@@ -40,7 +67,7 @@ namespace ShoppingList_05 {
 
         addElement(divItemData, comment.toString()); 
 
-        addElement(divItemData, date); 
+        addElement(divItemData); 
 
         addButton(newDiv, "edit"); 
 

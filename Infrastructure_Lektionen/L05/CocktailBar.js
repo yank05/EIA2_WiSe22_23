@@ -4,7 +4,7 @@ var L05_CocktailBar;
     let form;
     async function handleLoad(_event) {
         console.log("Init");
-        let response = await fetch("Data.json");
+        let response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
         let offer = await response.text();
         let data = JSON.parse(offer);
         L05_CocktailBar.generateContent(data);
