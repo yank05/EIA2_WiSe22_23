@@ -43,6 +43,7 @@ var ShoppingList_04;
         divItemData.appendChild(commentField);
         commentField.setAttribute("class", "ItemDataFont");
         commentField.innerHTML = comment;
+        addElement(divItemData, date);
         let dateField = document.createElement("p");
         divItemData.appendChild(dateField);
         dateField.setAttribute("class", "ItemDataFont");
@@ -63,6 +64,14 @@ var ShoppingList_04;
         deleteButton.addEventListener("click", deleteItem);
         list.appendChild(newDiv);
         // console.log(newItem, amount, comment, bought, date); 
+    }
+    function addElement(_parent, _content) {
+        let newItemField = document.createElement("p");
+        _parent.appendChild(newItemField);
+        newItemField.setAttribute("class", "ItemDataFont");
+        if (_content) {
+            newItemField.innerHTML = _content;
+        }
     }
     function itemBought(_event) {
         let trigger = _event.target.id;
