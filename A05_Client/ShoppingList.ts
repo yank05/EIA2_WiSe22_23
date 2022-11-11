@@ -2,7 +2,7 @@
 Aufgabe: Client_L05
 Name: Yannik König
 Matrikel: 271124
-Datum: 10.11.2022
+Datum: 11.11.2022
 Quellen von nachrecheriertem Code: https://tutorial.eyehunts.com/js/javascript-get-a-date-without-time-display-example/
 */
 
@@ -30,6 +30,11 @@ namespace ShoppingList_05 {
 
         let addButton: HTMLButtonElement = document.querySelector("button#add");
         addButton.addEventListener("click", itemAdd);
+        document.addEventListener("keypress", function (event: KeyboardEvent): void {
+            if (event.key == "Enter") {
+                itemAdd(); 
+            }
+        });  
 
         let response: Response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
         let item: string = await response.text();
@@ -37,7 +42,7 @@ namespace ShoppingList_05 {
 
         generateExistingItem(data); 
 
-    }
+    }  
 
     function generateExistingItem(_data: Data): void {
         let values: ItemAdded[] = _data[1];
