@@ -30,7 +30,7 @@ namespace ShoppingList_05 {
 
         let addButton: HTMLButtonElement = document.querySelector("button#add");
         addButton.addEventListener("click", itemAdd);
-        document.addEventListener("keypress", function (event: KeyboardEvent): void {
+        document.addEventListener("keypress", function(event: KeyboardEvent): void {
             if (event.key == "Enter") {
                 itemAdd(); 
             }
@@ -176,7 +176,8 @@ namespace ShoppingList_05 {
 
     function editItem(_event: Event): void {
         let trigger: string = (_event.target as HTMLButtonElement).id;
-        let triggerNumber: string = trigger.replace(/\D/g, "");
+        let triggerNum: string = trigger.replace(/\D/g, "");
+        let identifyer: number = parseInt(triggerNum);
         //to be continued
     }
 

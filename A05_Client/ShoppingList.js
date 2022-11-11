@@ -121,7 +121,8 @@ var ShoppingList_05;
     }
     function editItem(_event) {
         let trigger = _event.target.id;
-        let triggerNumber = trigger.replace(/\D/g, "");
+        let triggerNum = trigger.replace(/\D/g, "");
+        let identifyer = parseInt(triggerNum);
         //to be continued
     }
     function deleteItem(_event) {
