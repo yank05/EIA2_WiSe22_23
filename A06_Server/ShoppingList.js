@@ -20,7 +20,7 @@ var ShoppingList_06;
                 itemAdd();
             }
         });
-        let response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/ShoppingList/Data.json");
+        let response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
         let item = await response.text();
         let data = JSON.parse(item);
         generateExistingItem(data);
@@ -122,10 +122,19 @@ var ShoppingList_06;
         let trigger = _event.target.id;
         let triggerNum = trigger.replace(/\D/g, "");
         let identifyer = parseInt(triggerNum);
+        let values = [];
         let buttonEdit = document.getElementById("edit" + identifyer);
+        let listEdit = document.getElementById("ItemData" + identifyer);
         buttonEdit.removeEventListener("click", editItem);
         buttonEdit.addEventListener("click", saveChanges);
         buttonEdit.innerHTML = "save";
+        for (let index = 0; index < 4; index++) {
+            let item = listEdit.querySelector("p");
+            let value = item.innerHTML;
+            values.push(value);
+            listEdit.removeChild(item);
+        }
+        createEditInputs(listEdit, values);
     }
     function deleteItem(_event) {
         let trigger = _event.target.id;
@@ -135,8 +144,56 @@ var ShoppingList_06;
         let remIt = document.getElementById("lister" + identifyer);
         list.removeChild(remIt);
     }
-    function saveChanges() {
-        console.log("saved!");
+    async function saveChanges(_event) {
+        let trigger = _event.target.id;
+        let triggerNum = trigger.replace(/\D/g, "");
+        let identifyer = parseInt(triggerNum);
+        let buttonEdit = document.getElementById("edit" + identifyer);
+        let listEdit = document.getElementById("ItemData" + identifyer);
+        let formData = new FormData(listEdit.querySelector("form"));
+        let form = listEdit.querySelector("form");
+        let item = formData.get("item");
+        let amount = formData.get("amount");
+        let comment = formData.get("comment");
+        let date = formData.get("date");
+        listEdit.removeChild(form);
+        listEdit.removeAttribute("class");
+        listEdit.setAttribute("class", "ItemData");
+        buttonEdit.removeEventListener("click", saveChanges);
+        buttonEdit.addEventListener("click", editItem);
+        buttonEdit.innerHTML = "edit";
+        addElement(listEdit, item.toString());
+        addElement(listEdit, amount.toString());
+        addElement(listEdit, comment.toString());
+        addElement(listEdit, date.toString());
+        let query = new URLSearchParams(formData);
+        await fetch("index.html" + query.toString());
+        alert("Changes saved!");
+    }
+    function createEditInputs(_listEdit, _values) {
+        _listEdit.setAttribute("class", "addfield");
+        let form = document.createElement("form");
+        _listEdit.appendChild(form);
+        let formData = new FormData;
+        let inputField0 = document.createElement("input");
+        inputField0.setAttribute("type", "text");
+        inputField0.setAttribute("name", "item");
+        inputField0.setAttribute("value", _values[0]);
+        form.appendChild(inputField0);
+        let inputField1 = document.createElement("input");
+        inputField1.setAttribute("type", "number");
+        inputField1.setAttribute("name", "amount");
+        inputField1.setAttribute("value", _values[1]);
+        form.appendChild(inputField1);
+        let inputField2 = document.createElement("input");
+        inputField2.setAttribute("name", "comment");
+        inputField2.setAttribute("value", _values[2]);
+        form.appendChild(inputField2);
+        let inputField3 = document.createElement("input");
+        inputField3.setAttribute("type", "text");
+        inputField3.setAttribute("name", "date");
+        inputField3.setAttribute("value", _values[3]);
+        form.appendChild(inputField3);
     }
 })(ShoppingList_06 || (ShoppingList_06 = {}));
 //# sourceMappingURL=ShoppingList.js.map

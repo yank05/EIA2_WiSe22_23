@@ -37,7 +37,7 @@ namespace ShoppingList_06 {
             }
         });  
 
-        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/ShoppingList/Data.json");
+        let response: Response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
         let item: string = await response.text();
         let data: Data = JSON.parse(item);
 
@@ -174,15 +174,25 @@ namespace ShoppingList_06 {
         let trigger: string = (_event.target as HTMLButtonElement).id;
         let triggerNum: string = trigger.replace(/\D/g, "");
         let identifyer: number = parseInt(triggerNum);
+        let values: string[] = []; 
 
         let buttonEdit: HTMLElement = document.getElementById("edit" + identifyer);
+        let listEdit: HTMLElement = document.getElementById("ItemData" + identifyer);  
 
-        
         buttonEdit.removeEventListener("click", editItem);
         buttonEdit.addEventListener("click", saveChanges);
-        buttonEdit.innerHTML = "save"; 
-    }
+        buttonEdit.innerHTML = "save";
+        
 
+        for (let index: number = 0; index < 4; index++) {
+            let item: HTMLElement = listEdit.querySelector("p"); 
+            let value: string = item.innerHTML; 
+            values.push(value); 
+            listEdit.removeChild(item); 
+        }
+        createEditInputs(listEdit, values);
+    }
+    
     function deleteItem(_event: Event): void {
         let trigger: string = (_event.target as HTMLButtonElement).id
         let triggerNum: string = trigger.replace(/\D/g, "");
@@ -193,7 +203,71 @@ namespace ShoppingList_06 {
         list.removeChild(remIt);
     }
 
-    function saveChanges(): void {
-        console.log("saved!");
+    async function saveChanges(_event: Event): Promise<void> {
+        let trigger: string = (_event.target as HTMLButtonElement).id;
+        let triggerNum: string = trigger.replace(/\D/g, "");
+        let identifyer: number = parseInt(triggerNum);
+
+        let buttonEdit: HTMLElement = document.getElementById("edit" + identifyer);
+
+        let listEdit: HTMLElement = document.getElementById("ItemData" + identifyer);     
+        let formData: FormData = new FormData(listEdit.querySelector("form")); 
+        let form: HTMLElement = listEdit.querySelector("form"); 
+
+        let item: FormDataEntryValue = formData.get("item");
+        let amount: FormDataEntryValue = formData.get("amount");
+        let comment: FormDataEntryValue = formData.get("comment"); 
+        let date: FormDataEntryValue = formData.get("date"); 
+        listEdit.removeChild(form); 
+        listEdit.removeAttribute("class");
+        listEdit.setAttribute("class", "ItemData");  
+
+        buttonEdit.removeEventListener( "click", saveChanges);
+        buttonEdit.addEventListener("click", editItem);
+        buttonEdit.innerHTML = "edit";
+       
+        
+        addElement(listEdit, item.toString());
+
+        addElement(listEdit, amount.toString());
+
+        addElement(listEdit, comment.toString()); 
+
+        addElement(listEdit, date.toString()); 
+
+        let query: URLSearchParams = new URLSearchParams(<any>formData);
+        await fetch("index.html" + query.toString());
+        alert("Changes saved!");
+
+
     }
-}
+
+    function createEditInputs(_listEdit: HTMLElement, _values: string[]): void {
+        _listEdit.setAttribute("class", "addfield");
+        let form: HTMLElement = document.createElement("form");
+        _listEdit.appendChild(form); 
+        let formData: FormData = new FormData; 
+        let inputField0: HTMLElement = document.createElement("input");
+        inputField0.setAttribute("type", "text"); 
+        inputField0.setAttribute("name", "item");
+        inputField0.setAttribute("value", _values[0]); 
+        form.appendChild(inputField0);
+
+        let inputField1: HTMLElement = document.createElement("input");
+        inputField1.setAttribute("type", "number"); 
+        inputField1.setAttribute("name", "amount");
+        inputField1.setAttribute("value", _values[1]); 
+        form.appendChild(inputField1);
+
+        let inputField2: HTMLElement = document.createElement("input");
+        inputField2.setAttribute("name", "comment");
+        inputField2.setAttribute("value", _values[2]); 
+        form.appendChild(inputField2);
+        
+        let inputField3: HTMLElement = document.createElement("input");
+        inputField3.setAttribute("type", "text"); 
+        inputField3.setAttribute("name", "date");
+        inputField3.setAttribute("value", _values[3]); 
+        form.appendChild(inputField3);        
+    }
+} 
