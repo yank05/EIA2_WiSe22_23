@@ -20,7 +20,7 @@ var ShoppingList_06;
                 itemAdd();
             }
         });
-        let response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
+        let response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/data.json");
         let item = await response.text();
         let data = JSON.parse(item);
         generateExistingItem(data);
@@ -67,7 +67,7 @@ var ShoppingList_06;
         addButton(newDiv, "delete");
         list.appendChild(newDiv);
         let query = new URLSearchParams(formData);
-        await fetch("index.html" + query.toString());
+        await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/data.json?" + query.toString());
         alert("Item added!");
     }
     function addElement(_parent, _content) {
@@ -167,7 +167,7 @@ var ShoppingList_06;
         addElement(listEdit, comment.toString());
         addElement(listEdit, date.toString());
         let query = new URLSearchParams(formData);
-        await fetch("index.html" + query.toString());
+        await fetch("index.html?" + query.toString());
         alert("Changes saved!");
     }
     function createEditInputs(_listEdit, _values) {

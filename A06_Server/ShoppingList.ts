@@ -37,7 +37,7 @@ namespace ShoppingList_06 {
             }
         });  
 
-        let response: Response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
+        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/data.json");
         let item: string = await response.text();
         let data: Data = JSON.parse(item);
 
@@ -112,7 +112,7 @@ namespace ShoppingList_06 {
         list.appendChild(newDiv);
 
         let query: URLSearchParams = new URLSearchParams(<any>formData);
-        await fetch("index.html" + query.toString());
+        await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/data.json?" + query.toString());
         alert("Item added!");
 
     }
@@ -236,7 +236,7 @@ namespace ShoppingList_06 {
         addElement(listEdit, date.toString()); 
 
         let query: URLSearchParams = new URLSearchParams(<any>formData);
-        await fetch("index.html" + query.toString());
+        await fetch("index.html?" + query.toString());
         alert("Changes saved!");
 
 

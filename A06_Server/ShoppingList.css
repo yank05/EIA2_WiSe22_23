@@ -7,7 +7,7 @@
 h3 {
     text-align: center;
 }
-#addfield {
+.addfield {
     position: relative;
     justify-content: center;
     align-items: center;

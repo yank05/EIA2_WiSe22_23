@@ -21,7 +21,7 @@ var L05_CocktailBar;
         console.log("Send order");
         let formData = new FormData(form);
         let query = new URLSearchParams(formData);
-        await fetch("index.html?" + query.toString());
+        await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json?" + query.toString());
         alert("Order sent!");
     }
     function handleChange(_event) {
