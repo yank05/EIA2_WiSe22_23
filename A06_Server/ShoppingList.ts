@@ -15,16 +15,16 @@ namespace ShoppingList_06 {
 
     window.addEventListener("load", handleLoad);
 
+    interface Data {
+        [id: number]: ItemAdded[]; 
+    }
+
     interface ItemAdded {
         newItem: string;
         amount: number;
         comment: string; 
         bought: boolean; 
         date: string; 
-    }
-
-    interface Data {
-        [1]: ItemAdded[]; 
     }
 
     async function handleLoad(_event: Event): Promise<void> {
@@ -37,21 +37,27 @@ namespace ShoppingList_06 {
             }
         });  
 
-        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/data.json");
+
+        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/dataList.json"); 
         let item: string = await response.text();
         let data: Data = JSON.parse(item);
 
         generateExistingItem(data); 
 
+
     }  
 
     function generateExistingItem(_data: Data): void {
-        let values: ItemAdded[] = _data[1];
-        console.log(values[0].newItem);  
+        let keys: string[] = Object.keys(_data);
+        for (let index = 0; index < keys.length; index++) {
 
-        let newItem: string = values[0].newItem;
-        let amount: number = values[0].amount;
-        let comment: string = values[0].comment;
+        let item: ItemAdded[] = _data[keys[index]];  
+        let text: string[] = Object.values(item); 
+        console.log(text); 
+
+        let newItem: string = text[0];
+        let amount: number = parseInt(text[1]);
+        let comment: string = text[2];
         let list: HTMLElement = document.getElementById("list");
         let newDiv: HTMLDivElement = document.createElement("div");
         let newInput: HTMLInputElement = document.createElement("input");
@@ -78,7 +84,7 @@ namespace ShoppingList_06 {
 
         list.appendChild(newDiv);
 
-
+        }
     }
     async function itemAdd(): Promise<void> {
         let formData: FormData = new FormData(document.querySelector("form"));
@@ -111,9 +117,29 @@ namespace ShoppingList_06 {
 
         list.appendChild(newDiv);
 
-        let query: URLSearchParams = new URLSearchParams(<any>formData);
-        await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/data.json?" + query.toString());
+        sendData(formData); 
+
+    }
+
+    async function sendData(_formData: FormData): Promise<void> {
+
+        interface FormDataJSON {
+            [key: string]: FormDataEntryValue | FormDataEntryValue[];
+          }
+        let json: FormDataJSON = {};
+        for (let key of _formData.keys())
+            if (!json[key]) {
+              let values: FormDataEntryValue[] = _formData.getAll(key);
+              json[key] = values.length > 1 ? values : values[0];
+            } 
+
+        let query: URLSearchParams = new URLSearchParams(); 
+        query.set("command", "insert");
+        query.set("collection", "dataList");
+        query.set("data", JSON.stringify(json));
+        await fetch("http://webuser.hs-furtwangen.de/~koenigya/Database/?" + query.toString());
         alert("Item added!");
+        console.log(query.toString()); 
 
     }
 

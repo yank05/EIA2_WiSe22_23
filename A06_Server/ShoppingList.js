@@ -20,31 +20,35 @@ var ShoppingList_06;
                 itemAdd();
             }
         });
-        let response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/data.json");
+        let response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/dataList.json");
         let item = await response.text();
         let data = JSON.parse(item);
         generateExistingItem(data);
     }
     function generateExistingItem(_data) {
-        let values = _data[1];
-        console.log(values[0].newItem);
-        let newItem = values[0].newItem;
-        let amount = values[0].amount;
-        let comment = values[0].comment;
-        let list = document.getElementById("list");
-        let newDiv = document.createElement("div");
-        let newInput = document.createElement("input");
-        let divItemData = document.createElement("div");
-        createInput(newInput, newDiv);
-        createDiv(newDiv);
-        createItemDiv(divItemData, newDiv);
-        addElement(divItemData, newItem.toString());
-        addElement(divItemData, amount.toString());
-        addElement(divItemData, comment.toString());
-        addElement(divItemData, dateNoTime);
-        addButton(newDiv, "edit");
-        addButton(newDiv, "delete");
-        list.appendChild(newDiv);
+        let keys = Object.keys(_data);
+        for (let index = 0; index < keys.length; index++) {
+            let item = _data[keys[index]];
+            let text = Object.values(item);
+            console.log(text);
+            let newItem = text[0];
+            let amount = parseInt(text[1]);
+            let comment = text[2];
+            let list = document.getElementById("list");
+            let newDiv = document.createElement("div");
+            let newInput = document.createElement("input");
+            let divItemData = document.createElement("div");
+            createInput(newInput, newDiv);
+            createDiv(newDiv);
+            createItemDiv(divItemData, newDiv);
+            addElement(divItemData, newItem.toString());
+            addElement(divItemData, amount.toString());
+            addElement(divItemData, comment.toString());
+            addElement(divItemData, dateNoTime);
+            addButton(newDiv, "edit");
+            addButton(newDiv, "delete");
+            list.appendChild(newDiv);
+        }
     }
     async function itemAdd() {
         let formData = new FormData(document.querySelector("form"));
@@ -66,9 +70,22 @@ var ShoppingList_06;
         addButton(newDiv, "edit");
         addButton(newDiv, "delete");
         list.appendChild(newDiv);
-        let query = new URLSearchParams(formData);
-        await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/data.json?" + query.toString());
+        sendData(formData);
+    }
+    async function sendData(_formData) {
+        let json = {};
+        for (let key of _formData.keys())
+            if (!json[key]) {
+                let values = _formData.getAll(key);
+                json[key] = values.length > 1 ? values : values[0];
+            }
+        let query = new URLSearchParams();
+        query.set("command", "insert");
+        query.set("collection", "dataList");
+        query.set("data", JSON.stringify(json));
+        await fetch("http://webuser.hs-furtwangen.de/~koenigya/Database/?" + query.toString());
         alert("Item added!");
+        console.log(query.toString());
     }
     function addElement(_parent, _content) {
         let newItemField = document.createElement("p");

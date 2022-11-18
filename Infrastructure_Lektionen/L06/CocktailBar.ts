@@ -1,11 +1,13 @@
-namespace L05_CocktailBar {
+namespace L06_CocktailBar {
     window.addEventListener("load", handleLoad);
     let form: HTMLFormElement;
+    // let url: string = "index.html";
+    let url: string = "http://localhost:5001";
 
     async function handleLoad(_event: Event): Promise<void> {
         console.log("Init");
 
-        let response: Response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
+        let response: Response = await fetch("Data.json");
         let offer: string = await response.text();
         let data: Data = JSON.parse(offer);
 
@@ -26,9 +28,10 @@ namespace L05_CocktailBar {
     async function sendOrder(_event: Event): Promise<void> {
         console.log("Send order");
         let formData: FormData = new FormData(form);
-        let query: URLSearchParams = new URLSearchParams(<any>formData);
-        await fetch("index.html?" + query.toString());
-        alert("Order sent!");
+        let query: URLSearchParams = new URLSearchParams(<URLSearchParams>formData);
+        let response: Response = await fetch(url + "?" + query.toString());
+        let responseText: string = await response.text();
+        alert(responseText);
     }
 
     function handleChange(_event: Event): void {

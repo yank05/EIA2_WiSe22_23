@@ -1,13 +1,15 @@
-var L05_CocktailBar;
-(function (L05_CocktailBar) {
+var L06_CocktailBar;
+(function (L06_CocktailBar) {
     window.addEventListener("load", handleLoad);
     let form;
+    // let url: string = "index.html";
+    let url = "http://localhost:5001";
     async function handleLoad(_event) {
         console.log("Init");
-        let response = await fetch("https://yank05.github.io/EIA2_WiSe22_23/A05_Client/Data.json");
+        let response = await fetch("Data.json");
         let offer = await response.text();
         let data = JSON.parse(offer);
-        L05_CocktailBar.generateContent(data);
+        L06_CocktailBar.generateContent(data);
         form = document.querySelector("form");
         let slider = document.querySelector("input#amount");
         let submit = document.querySelector("button[type=button]");
@@ -21,8 +23,9 @@ var L05_CocktailBar;
         console.log("Send order");
         let formData = new FormData(form);
         let query = new URLSearchParams(formData);
-        await fetch("index.html?" + query.toString());
-        alert("Order sent!");
+        let response = await fetch(url + "?" + query.toString());
+        let responseText = await response.text();
+        alert(responseText);
     }
     function handleChange(_event) {
         displayOrder();
@@ -56,5 +59,5 @@ var L05_CocktailBar;
         let amount = _event.target.value;
         progress.value = parseFloat(amount);
     }
-})(L05_CocktailBar || (L05_CocktailBar = {}));
+})(L06_CocktailBar || (L06_CocktailBar = {}));
 //# sourceMappingURL=CocktailBar.js.map
