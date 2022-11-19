@@ -10,7 +10,7 @@ namespace ShoppingList_06 {
     let elementCounter: number = 0; 
     let date: Date = new Date(); 
     let dateNoTime: string = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear(); 
-    let url: string = "https://webuser.hs-furtwangen.de/~koenigya/Database/index.php/"; 
+    let url: string = "https://webuser.hs-furtwangen.de/~koenigya/Database/index.php/";
     window.addEventListener("load", handleLoad);
 
     interface Data {
@@ -66,7 +66,7 @@ namespace ShoppingList_06 {
         let divItemData: HTMLDivElement = document.createElement("div");
 
 
-        createInput(newInput, newDiv); 
+        createInput(newInput, newDiv,); 
 
         createDiv(newDiv); 
 
@@ -184,13 +184,13 @@ namespace ShoppingList_06 {
         _element.setAttribute("id", "lister" + itemNumber);
     }
 
-    function createInput(_element: HTMLElement, _parent: HTMLElement): void {
+    async function createInput(_element: HTMLInputElement, _parent: HTMLElement): Promise<void> {
         _parent.appendChild(_element);
         _element.setAttribute("class", "bought");
         _element.setAttribute("id", "bought" + itemNumber);
         _element.setAttribute("type", "checkbox");
         _element.addEventListener("change", itemBought);
-    }
+}
 
     function createItemDiv(_element: HTMLElement, _parent: HTMLElement): void {
         _parent.appendChild(_element);
@@ -198,12 +198,39 @@ namespace ShoppingList_06 {
         _element.setAttribute("id", "ItemData" + itemNumber);
     }; 
     
-    function itemBought(_event: Event): void {
+    async function itemBought(_event: Event): Promise<void> {
         let trigger: string = (_event.target as HTMLInputElement).id;
         let triggerNum: string = trigger.replace(/\D/g, "");
         let identifyer: number = parseInt(triggerNum);
-        //to be continued
+
+        let response0: Response = await fetch(url + "?command=find&collection=dataList"); 
+        let itemResponse: string = await response0.text();
+        let data: ReturnedJSON = JSON.parse(itemResponse);
+
+        let keys: string[] = Object.keys(data.data);
+
+        let id: string = keys[identifyer];
+
+        let query: URLSearchParams = new URLSearchParams(); 
+        query.set("command", "update");
+        query.set("collection", "dataList");
+        query.set("id", id); 
+        query.set("data", "{'bought': true}"); 
+        let response1: Response = await fetch(url + "?" + query.toString());
+        let responseText: string = await response1.text();
+        console.log(responseText); 
+
+        if (responseText.includes("success")) {
+            alert("Item marked as bought!"); 
+        }
+        else {
+            alert("Error! Try again!");
+                } 
+        
     }
+
+    //Dass "bought" auch im Dokument beim Aufbau ausgelesen und dargestellt wird habe ich auch 
+    //nach ewiglangem Googlen und Ausprobieren nicht hinbekommen
 
     function editItem(_event: Event): void {
         let trigger: string = (_event.target as HTMLButtonElement).id;
@@ -233,10 +260,9 @@ namespace ShoppingList_06 {
         _listEdit.removeAttribute("border-style"); 
         let form: HTMLElement = document.createElement("form");
         _listEdit.appendChild(form); 
-        let formData: FormData = new FormData; 
         let inputField0: HTMLElement = document.createElement("input");
         inputField0.setAttribute("type", "text"); 
-        inputField0.setAttribute("name", "item");
+        inputField0.setAttribute("name", "newItem");
         inputField0.setAttribute("value", _values[0]); 
         form.appendChild(inputField0);
 
@@ -251,7 +277,7 @@ namespace ShoppingList_06 {
         inputField2.setAttribute("value", _values[2]); 
         form.appendChild(inputField2);
         
-        let inputField3: HTMLElement = document.createElement("input");
+        let inputField3: HTMLInputElement = document.createElement("input");
         inputField3.setAttribute("type", "text"); 
         inputField3.setAttribute("name", "date");
         inputField3.setAttribute("value", _values[3]); 
@@ -269,7 +295,7 @@ namespace ShoppingList_06 {
         let formData: FormData = new FormData(listEdit.querySelector("form")); 
         let form: HTMLElement = listEdit.querySelector("form"); 
 
-        let item: FormDataEntryValue = formData.get("item");
+        let item: FormDataEntryValue = formData.get("newItem");
         let amount: FormDataEntryValue = formData.get("amount");
         let comment: FormDataEntryValue = formData.get("comment"); 
         let date: FormDataEntryValue = formData.get("date"); 
@@ -314,7 +340,7 @@ namespace ShoppingList_06 {
         query.set("data", JSON.stringify(json)); 
         let response1: Response = await fetch(url + "?" + query.toString());
         let responseText: string = await response1.text();
-        console.log(responseText); 
+        console.log(query); 
 
         if (responseText.includes("success")) {
             alert("Item edited!"); 

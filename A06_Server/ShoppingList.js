@@ -122,7 +122,7 @@ var ShoppingList_06;
         _element.setAttribute("class", "lister");
         _element.setAttribute("id", "lister" + itemNumber);
     }
-    function createInput(_element, _parent) {
+    async function createInput(_element, _parent) {
         _parent.appendChild(_element);
         _element.setAttribute("class", "bought");
         _element.setAttribute("id", "bought" + itemNumber);
@@ -135,12 +135,32 @@ var ShoppingList_06;
         _element.setAttribute("id", "ItemData" + itemNumber);
     }
     ;
-    function itemBought(_event) {
+    async function itemBought(_event) {
         let trigger = _event.target.id;
         let triggerNum = trigger.replace(/\D/g, "");
         let identifyer = parseInt(triggerNum);
-        //to be continued
+        let response0 = await fetch(url + "?command=find&collection=dataList");
+        let itemResponse = await response0.text();
+        let data = JSON.parse(itemResponse);
+        let keys = Object.keys(data.data);
+        let id = keys[identifyer];
+        let query = new URLSearchParams();
+        query.set("command", "update");
+        query.set("collection", "dataList");
+        query.set("id", id);
+        query.set("data", "{'bought': true}");
+        let response1 = await fetch(url + "?" + query.toString());
+        let responseText = await response1.text();
+        console.log(responseText);
+        if (responseText.includes("success")) {
+            alert("Item marked as bought!");
+        }
+        else {
+            alert("Error! Try again!");
+        }
     }
+    //Dass "bought" auch im Dokument beim Aufbau ausgelesen und dargestellt wird habe ich auch 
+    //nach ewiglangem Googlen und Ausprobieren nicht hinbekommen
     function editItem(_event) {
         let trigger = _event.target.id;
         let triggerNum = trigger.replace(/\D/g, "");
@@ -164,10 +184,9 @@ var ShoppingList_06;
         _listEdit.removeAttribute("border-style");
         let form = document.createElement("form");
         _listEdit.appendChild(form);
-        let formData = new FormData;
         let inputField0 = document.createElement("input");
         inputField0.setAttribute("type", "text");
-        inputField0.setAttribute("name", "item");
+        inputField0.setAttribute("name", "newItem");
         inputField0.setAttribute("value", _values[0]);
         form.appendChild(inputField0);
         let inputField1 = document.createElement("input");
@@ -193,7 +212,7 @@ var ShoppingList_06;
         let listEdit = document.getElementById("ItemData" + identifyer);
         let formData = new FormData(listEdit.querySelector("form"));
         let form = listEdit.querySelector("form");
-        let item = formData.get("item");
+        let item = formData.get("newItem");
         let amount = formData.get("amount");
         let comment = formData.get("comment");
         let date = formData.get("date");
@@ -225,7 +244,7 @@ var ShoppingList_06;
         query.set("data", JSON.stringify(json));
         let response1 = await fetch(url + "?" + query.toString());
         let responseText = await response1.text();
-        console.log(responseText);
+        console.log(query);
         if (responseText.includes("success")) {
             alert("Item edited!");
         }
