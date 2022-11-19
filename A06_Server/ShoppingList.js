@@ -1,9 +1,8 @@
 /*
-Aufgabe: Client_L05
+Aufgabe: Server_L06
 Name: Yannik König
 Matrikel: 271124
-Datum: 11.11.2022
-Quellen von nachrecheriertem Code: https://tutorial.eyehunts.com/js/javascript-get-a-date-without-time-display-example/
+Datum: 19.11.2022
 */
 var ShoppingList_06;
 (function (ShoppingList_06) {
@@ -25,7 +24,6 @@ var ShoppingList_06;
         let item = await response.text();
         let data = JSON.parse(item);
         generateExistingItem(data);
-        console.log(data);
     }
     function generateExistingItem(_data) {
         let keys = Object.keys(_data.data);
@@ -187,33 +185,6 @@ var ShoppingList_06;
         inputField3.setAttribute("value", _values[3]);
         form.appendChild(inputField3);
     }
-    async function deleteItem(_event) {
-        let trigger = _event.target.id;
-        let triggerNum = trigger.replace(/\D/g, "");
-        let identifyer = parseInt(triggerNum);
-        let list = document.getElementById("list");
-        let remIt = document.getElementById("lister" + identifyer);
-        list.removeChild(remIt);
-        let response0 = await fetch(url + "?command=find&collection=dataList");
-        let item = await response0.text();
-        let data = JSON.parse(item);
-        let keys = Object.keys(data.data);
-        console.log(keys);
-        console.log(identifyer);
-        let id = keys[identifyer];
-        let query = new URLSearchParams();
-        query.set("command", "delete");
-        query.set("collection", "dataList");
-        query.set("id", id);
-        let response1 = await fetch(url + "?" + query.toString());
-        let responseText = await response1.text();
-        if (responseText.includes("success")) {
-            alert("Item deleted!");
-        }
-        else {
-            alert("Error! Try again!");
-        }
-    }
     async function saveChanges(_event) {
         let trigger = _event.target.id;
         let triggerNum = trigger.replace(/\D/g, "");
@@ -255,6 +226,33 @@ var ShoppingList_06;
         let response1 = await fetch(url + "?" + query.toString());
         let responseText = await response1.text();
         console.log(responseText);
+        if (responseText.includes("success")) {
+            alert("Item edited!");
+        }
+        else {
+            alert("Error! Try again!");
+        }
+    }
+    async function deleteItem(_event) {
+        let trigger = _event.target.id;
+        let triggerNum = trigger.replace(/\D/g, "");
+        let identifyer = parseInt(triggerNum);
+        let list = document.getElementById("list");
+        let remIt = document.getElementById("lister" + identifyer);
+        list.removeChild(remIt);
+        let response0 = await fetch(url + "?command=find&collection=dataList");
+        let item = await response0.text();
+        let data = JSON.parse(item);
+        let keys = Object.keys(data.data);
+        console.log(keys);
+        console.log(identifyer);
+        let id = keys[identifyer];
+        let query = new URLSearchParams();
+        query.set("command", "delete");
+        query.set("collection", "dataList");
+        query.set("id", id);
+        let response1 = await fetch(url + "?" + query.toString());
+        let responseText = await response1.text();
         if (responseText.includes("success")) {
             alert("Item deleted!");
         }

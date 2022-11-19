@@ -1,9 +1,8 @@
 /*
-Aufgabe: Client_L05
+Aufgabe: Server_L06
 Name: Yannik König
 Matrikel: 271124
-Datum: 11.11.2022
-Quellen von nachrecheriertem Code: https://tutorial.eyehunts.com/js/javascript-get-a-date-without-time-display-example/
+Datum: 19.11.2022
 */
 
 namespace ShoppingList_06 {
@@ -47,16 +46,15 @@ namespace ShoppingList_06 {
         let data: ReturnedJSON = JSON.parse(item);
 
         generateExistingItem(data); 
-        console.log(data); 
 
 
     }  
 
     function generateExistingItem(_data: ReturnedJSON): void {
         let keys: string[] = Object.keys(_data.data);
-        for (let index = 0; index < keys.length; index++) {
+        for (let index: number = 0; index < keys.length; index++) {
 
-        let item: ItemAdded[] = _data.data[keys[index]];  
+        let item: string[] = _data.data[keys[index]];  
         let text: string[] = Object.values(item); 
 
         let newItem: string = text[0];
@@ -259,42 +257,6 @@ namespace ShoppingList_06 {
         inputField3.setAttribute("value", _values[3]); 
         form.appendChild(inputField3);        
     }
-    
-    async function deleteItem(_event: Event): Promise<void>  {
-        let trigger: string = (_event.target as HTMLButtonElement).id; 
-        let triggerNum: string = trigger.replace(/\D/g, "");
-        let identifyer: number = parseInt(triggerNum);
-
-        let list: HTMLElement = document.getElementById("list");
-        let remIt: HTMLElement = document.getElementById("lister" + identifyer);
-        list.removeChild(remIt);
-
-        let response0: Response = await fetch(url + "?command=find&collection=dataList"); 
-        let item: string = await response0.text();
-        let data: ReturnedJSON = JSON.parse(item);
-
-        let keys: string[] = Object.keys(data.data);
-        console.log(keys); 
-        console.log(identifyer); 
-        let id: string = keys[identifyer];
-        let query: URLSearchParams = new URLSearchParams(); 
-        query.set("command", "delete");
-        query.set("collection", "dataList");
-        query.set("id", id); 
-        let response1: Response = await fetch(url + "?" + query.toString());
-        let responseText: string = await response1.text();
-
-        if (responseText.includes("success")) {
-            alert("Item deleted!"); 
-        }
-        else {
-            alert("Error! Try again!");
-                }
-
-
-
-
-    }
 
     async function saveChanges(_event: Event): Promise<void> {
         let trigger: string = (_event.target as HTMLButtonElement).id;
@@ -355,7 +317,7 @@ namespace ShoppingList_06 {
         console.log(responseText); 
 
         if (responseText.includes("success")) {
-            alert("Item deleted!"); 
+            alert("Item edited!"); 
         }
         else {
             alert("Error! Try again!");
@@ -363,5 +325,43 @@ namespace ShoppingList_06 {
 
 
     }
+    
+    async function deleteItem(_event: Event): Promise<void>  {
+        let trigger: string = (_event.target as HTMLButtonElement).id; 
+        let triggerNum: string = trigger.replace(/\D/g, "");
+        let identifyer: number = parseInt(triggerNum);
+
+        let list: HTMLElement = document.getElementById("list");
+        let remIt: HTMLElement = document.getElementById("lister" + identifyer);
+        list.removeChild(remIt);
+
+        let response0: Response = await fetch(url + "?command=find&collection=dataList"); 
+        let item: string = await response0.text();
+        let data: ReturnedJSON = JSON.parse(item);
+
+        let keys: string[] = Object.keys(data.data);
+        console.log(keys); 
+        console.log(identifyer); 
+        let id: string = keys[identifyer];
+        let query: URLSearchParams = new URLSearchParams(); 
+        query.set("command", "delete");
+        query.set("collection", "dataList");
+        query.set("id", id); 
+        let response1: Response = await fetch(url + "?" + query.toString());
+        let responseText: string = await response1.text();
+
+        if (responseText.includes("success")) {
+            alert("Item deleted!"); 
+        }
+        else {
+            alert("Error! Try again!");
+                }
+
+
+
+
+    }
+
+   
 
 } 
