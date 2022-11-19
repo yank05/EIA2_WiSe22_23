@@ -161,6 +161,32 @@ var ShoppingList_06;
         }
         createEditInputs(listEdit, values);
     }
+    function createEditInputs(_listEdit, _values) {
+        _listEdit.setAttribute("class", "editfield");
+        _listEdit.removeAttribute("border-style");
+        let form = document.createElement("form");
+        _listEdit.appendChild(form);
+        let formData = new FormData;
+        let inputField0 = document.createElement("input");
+        inputField0.setAttribute("type", "text");
+        inputField0.setAttribute("name", "item");
+        inputField0.setAttribute("value", _values[0]);
+        form.appendChild(inputField0);
+        let inputField1 = document.createElement("input");
+        inputField1.setAttribute("type", "number");
+        inputField1.setAttribute("name", "amount");
+        inputField1.setAttribute("value", _values[1]);
+        form.appendChild(inputField1);
+        let inputField2 = document.createElement("input");
+        inputField2.setAttribute("name", "comment");
+        inputField2.setAttribute("value", _values[2]);
+        form.appendChild(inputField2);
+        let inputField3 = document.createElement("input");
+        inputField3.setAttribute("type", "text");
+        inputField3.setAttribute("name", "date");
+        inputField3.setAttribute("value", _values[3]);
+        form.appendChild(inputField3);
+    }
     async function deleteItem(_event) {
         let trigger = _event.target.id;
         let triggerNum = trigger.replace(/\D/g, "");
@@ -235,31 +261,6 @@ var ShoppingList_06;
         else {
             alert("Error! Try again!");
         }
-    }
-    function createEditInputs(_listEdit, _values) {
-        _listEdit.setAttribute("class", "addfield");
-        let form = document.createElement("form");
-        _listEdit.appendChild(form);
-        let formData = new FormData;
-        let inputField0 = document.createElement("input");
-        inputField0.setAttribute("type", "text");
-        inputField0.setAttribute("name", "item");
-        inputField0.setAttribute("value", _values[0]);
-        form.appendChild(inputField0);
-        let inputField1 = document.createElement("input");
-        inputField1.setAttribute("type", "number");
-        inputField1.setAttribute("name", "amount");
-        inputField1.setAttribute("value", _values[1]);
-        form.appendChild(inputField1);
-        let inputField2 = document.createElement("input");
-        inputField2.setAttribute("name", "comment");
-        inputField2.setAttribute("value", _values[2]);
-        form.appendChild(inputField2);
-        let inputField3 = document.createElement("input");
-        inputField3.setAttribute("type", "text");
-        inputField3.setAttribute("name", "date");
-        inputField3.setAttribute("value", _values[3]);
-        form.appendChild(inputField3);
     }
 })(ShoppingList_06 || (ShoppingList_06 = {}));
 //# sourceMappingURL=ShoppingList.js.map

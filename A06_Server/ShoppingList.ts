@@ -31,11 +31,6 @@ namespace ShoppingList_06 {
         data: Data; 
     }
 
-    interface ReturnedStatus {
-        status: string;
-        data: string; 
-    }
-
     async function handleLoad(_event: Event): Promise<void> {
 
         let addButton: HTMLButtonElement = document.querySelector("button#add");
@@ -234,6 +229,36 @@ namespace ShoppingList_06 {
         }
         createEditInputs(listEdit, values);
     }
+
+    function createEditInputs(_listEdit: HTMLElement, _values: string[]): void {
+        _listEdit.setAttribute("class", "editfield");
+        _listEdit.removeAttribute("border-style"); 
+        let form: HTMLElement = document.createElement("form");
+        _listEdit.appendChild(form); 
+        let formData: FormData = new FormData; 
+        let inputField0: HTMLElement = document.createElement("input");
+        inputField0.setAttribute("type", "text"); 
+        inputField0.setAttribute("name", "item");
+        inputField0.setAttribute("value", _values[0]); 
+        form.appendChild(inputField0);
+
+        let inputField1: HTMLElement = document.createElement("input");
+        inputField1.setAttribute("type", "number"); 
+        inputField1.setAttribute("name", "amount");
+        inputField1.setAttribute("value", _values[1]); 
+        form.appendChild(inputField1);
+
+        let inputField2: HTMLElement = document.createElement("input");
+        inputField2.setAttribute("name", "comment");
+        inputField2.setAttribute("value", _values[2]); 
+        form.appendChild(inputField2);
+        
+        let inputField3: HTMLElement = document.createElement("input");
+        inputField3.setAttribute("type", "text"); 
+        inputField3.setAttribute("name", "date");
+        inputField3.setAttribute("value", _values[3]); 
+        form.appendChild(inputField3);        
+    }
     
     async function deleteItem(_event: Event): Promise<void>  {
         let trigger: string = (_event.target as HTMLButtonElement).id; 
@@ -339,32 +364,4 @@ namespace ShoppingList_06 {
 
     }
 
-    function createEditInputs(_listEdit: HTMLElement, _values: string[]): void {
-        _listEdit.setAttribute("class", "addfield");
-        let form: HTMLElement = document.createElement("form");
-        _listEdit.appendChild(form); 
-        let formData: FormData = new FormData; 
-        let inputField0: HTMLElement = document.createElement("input");
-        inputField0.setAttribute("type", "text"); 
-        inputField0.setAttribute("name", "item");
-        inputField0.setAttribute("value", _values[0]); 
-        form.appendChild(inputField0);
-
-        let inputField1: HTMLElement = document.createElement("input");
-        inputField1.setAttribute("type", "number"); 
-        inputField1.setAttribute("name", "amount");
-        inputField1.setAttribute("value", _values[1]); 
-        form.appendChild(inputField1);
-
-        let inputField2: HTMLElement = document.createElement("input");
-        inputField2.setAttribute("name", "comment");
-        inputField2.setAttribute("value", _values[2]); 
-        form.appendChild(inputField2);
-        
-        let inputField3: HTMLElement = document.createElement("input");
-        inputField3.setAttribute("type", "text"); 
-        inputField3.setAttribute("name", "date");
-        inputField3.setAttribute("value", _values[3]); 
-        form.appendChild(inputField3);        
-    }
 } 

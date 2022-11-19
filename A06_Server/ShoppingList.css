@@ -23,6 +23,19 @@ h3 {
     border-radius: 15px;
 }
 
+.editfield {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    display: flex;
+    width: max-content;
+    min-width: 40em;
+    height: 5em;
+    text-align: center;
+    padding: auto;
+}
+
 #fieldset {
     border: none;
 }
