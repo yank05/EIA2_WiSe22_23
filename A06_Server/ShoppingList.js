@@ -11,6 +11,7 @@ var ShoppingList_06;
     let elementCounter = 0;
     let date = new Date();
     let dateNoTime = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+    let url = "https://webuser.hs-furtwangen.de/~koenigya/Database/index.php/";
     window.addEventListener("load", handleLoad);
     async function handleLoad(_event) {
         let addButton = document.querySelector("button#add");
@@ -20,17 +21,17 @@ var ShoppingList_06;
                 itemAdd();
             }
         });
-        let response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/dataList.json");
+        let response = await fetch(url + "?command=find&collection=dataList");
         let item = await response.text();
         let data = JSON.parse(item);
         generateExistingItem(data);
+        console.log(data);
     }
     function generateExistingItem(_data) {
-        let keys = Object.keys(_data);
+        let keys = Object.keys(_data.data);
         for (let index = 0; index < keys.length; index++) {
-            let item = _data[keys[index]];
+            let item = _data.data[keys[index]];
             let text = Object.values(item);
-            console.log(text);
             let newItem = text[0];
             let amount = parseInt(text[1]);
             let comment = text[2];
@@ -48,6 +49,7 @@ var ShoppingList_06;
             addButton(newDiv, "edit");
             addButton(newDiv, "delete");
             list.appendChild(newDiv);
+            itemNumber++;
         }
     }
     async function itemAdd() {
@@ -83,9 +85,15 @@ var ShoppingList_06;
         query.set("command", "insert");
         query.set("collection", "dataList");
         query.set("data", JSON.stringify(json));
-        await fetch("http://webuser.hs-furtwangen.de/~koenigya/Database/?" + query.toString());
-        alert("Item added!");
-        console.log(query.toString());
+        let response = await fetch(url + "?" + query.toString());
+        let responseText = await response.text();
+        console.log();
+        if (responseText.includes("success")) {
+            alert("Item added!");
+        }
+        else {
+            alert("Error! Try again!");
+        }
     }
     function addElement(_parent, _content) {
         let newItemField = document.createElement("p");
@@ -153,13 +161,32 @@ var ShoppingList_06;
         }
         createEditInputs(listEdit, values);
     }
-    function deleteItem(_event) {
+    async function deleteItem(_event) {
         let trigger = _event.target.id;
         let triggerNum = trigger.replace(/\D/g, "");
         let identifyer = parseInt(triggerNum);
         let list = document.getElementById("list");
         let remIt = document.getElementById("lister" + identifyer);
         list.removeChild(remIt);
+        let response0 = await fetch(url + "?command=find&collection=dataList");
+        let item = await response0.text();
+        let data = JSON.parse(item);
+        let keys = Object.keys(data.data);
+        console.log(keys);
+        console.log(identifyer);
+        let id = keys[identifyer];
+        let query = new URLSearchParams();
+        query.set("command", "delete");
+        query.set("collection", "dataList");
+        query.set("id", id);
+        let response1 = await fetch(url + "?" + query.toString());
+        let responseText = await response1.text();
+        if (responseText.includes("success")) {
+            alert("Item deleted!");
+        }
+        else {
+            alert("Error! Try again!");
+        }
     }
     async function saveChanges(_event) {
         let trigger = _event.target.id;
@@ -183,9 +210,31 @@ var ShoppingList_06;
         addElement(listEdit, amount.toString());
         addElement(listEdit, comment.toString());
         addElement(listEdit, date.toString());
-        let query = new URLSearchParams(formData);
-        await fetch("index.html?" + query.toString());
-        alert("Changes saved!");
+        let json = {};
+        for (let key of formData.keys())
+            if (!json[key]) {
+                let values = formData.getAll(key);
+                json[key] = values.length > 1 ? values : values[0];
+            }
+        let response0 = await fetch(url + "?command=find&collection=dataList");
+        let itemResponse = await response0.text();
+        let data = JSON.parse(itemResponse);
+        let keys = Object.keys(data.data);
+        let id = keys[identifyer];
+        let query = new URLSearchParams();
+        query.set("command", "update");
+        query.set("collection", "dataList");
+        query.set("id", id);
+        query.set("data", JSON.stringify(json));
+        let response1 = await fetch(url + "?" + query.toString());
+        let responseText = await response1.text();
+        console.log(responseText);
+        if (responseText.includes("success")) {
+            alert("Item deleted!");
+        }
+        else {
+            alert("Error! Try again!");
+        }
     }
     function createEditInputs(_listEdit, _values) {
         _listEdit.setAttribute("class", "addfield");

@@ -6,13 +6,12 @@ Datum: 11.11.2022
 Quellen von nachrecheriertem Code: https://tutorial.eyehunts.com/js/javascript-get-a-date-without-time-display-example/
 */
 
-
 namespace ShoppingList_06 {
     let itemNumber: number = 0;
     let elementCounter: number = 0; 
     let date: Date = new Date(); 
     let dateNoTime: string = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear(); 
-
+    let url: string = "https://webuser.hs-furtwangen.de/~koenigya/Database/index.php/"; 
     window.addEventListener("load", handleLoad);
 
     interface Data {
@@ -27,6 +26,16 @@ namespace ShoppingList_06 {
         date: string; 
     }
 
+    interface ReturnedJSON {
+        status: string;
+        data: Data; 
+    }
+
+    interface ReturnedStatus {
+        status: string;
+        data: string; 
+    }
+
     async function handleLoad(_event: Event): Promise<void> {
 
         let addButton: HTMLButtonElement = document.querySelector("button#add");
@@ -38,22 +47,22 @@ namespace ShoppingList_06 {
         });  
 
 
-        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~koenigya/Database/dataList.json"); 
+        let response: Response = await fetch(url + "?command=find&collection=dataList"); 
         let item: string = await response.text();
-        let data: Data = JSON.parse(item);
+        let data: ReturnedJSON = JSON.parse(item);
 
         generateExistingItem(data); 
+        console.log(data); 
 
 
     }  
 
-    function generateExistingItem(_data: Data): void {
-        let keys: string[] = Object.keys(_data);
+    function generateExistingItem(_data: ReturnedJSON): void {
+        let keys: string[] = Object.keys(_data.data);
         for (let index = 0; index < keys.length; index++) {
 
-        let item: ItemAdded[] = _data[keys[index]];  
+        let item: ItemAdded[] = _data.data[keys[index]];  
         let text: string[] = Object.values(item); 
-        console.log(text); 
 
         let newItem: string = text[0];
         let amount: number = parseInt(text[1]);
@@ -83,6 +92,7 @@ namespace ShoppingList_06 {
         addButton(newDiv, "delete"); 
 
         list.appendChild(newDiv);
+        itemNumber++
 
         }
     }
@@ -137,9 +147,15 @@ namespace ShoppingList_06 {
         query.set("command", "insert");
         query.set("collection", "dataList");
         query.set("data", JSON.stringify(json));
-        await fetch("http://webuser.hs-furtwangen.de/~koenigya/Database/?" + query.toString());
-        alert("Item added!");
-        console.log(query.toString()); 
+        let response: Response = await fetch(url + "?" + query.toString());
+        let responseText: string = await response.text();
+        console.log()
+        if (responseText.includes("success")) {
+            alert("Item added!"); 
+        }
+        else {
+            alert("Error! Try again!");
+                }
 
     }
 
@@ -219,14 +235,40 @@ namespace ShoppingList_06 {
         createEditInputs(listEdit, values);
     }
     
-    function deleteItem(_event: Event): void {
-        let trigger: string = (_event.target as HTMLButtonElement).id
+    async function deleteItem(_event: Event): Promise<void>  {
+        let trigger: string = (_event.target as HTMLButtonElement).id; 
         let triggerNum: string = trigger.replace(/\D/g, "");
         let identifyer: number = parseInt(triggerNum);
 
         let list: HTMLElement = document.getElementById("list");
         let remIt: HTMLElement = document.getElementById("lister" + identifyer);
         list.removeChild(remIt);
+
+        let response0: Response = await fetch(url + "?command=find&collection=dataList"); 
+        let item: string = await response0.text();
+        let data: ReturnedJSON = JSON.parse(item);
+
+        let keys: string[] = Object.keys(data.data);
+        console.log(keys); 
+        console.log(identifyer); 
+        let id: string = keys[identifyer];
+        let query: URLSearchParams = new URLSearchParams(); 
+        query.set("command", "delete");
+        query.set("collection", "dataList");
+        query.set("id", id); 
+        let response1: Response = await fetch(url + "?" + query.toString());
+        let responseText: string = await response1.text();
+
+        if (responseText.includes("success")) {
+            alert("Item deleted!"); 
+        }
+        else {
+            alert("Error! Try again!");
+                }
+
+
+
+
     }
 
     async function saveChanges(_event: Event): Promise<void> {
@@ -261,9 +303,38 @@ namespace ShoppingList_06 {
 
         addElement(listEdit, date.toString()); 
 
-        let query: URLSearchParams = new URLSearchParams(<any>formData);
-        await fetch("index.html?" + query.toString());
-        alert("Changes saved!");
+        interface FormDataJSON {
+            [key: string]: FormDataEntryValue | FormDataEntryValue[];
+          }
+        let json: FormDataJSON = {};
+        for (let key of formData.keys())
+            if (!json[key]) {
+              let values: FormDataEntryValue[] = formData.getAll(key);
+              json[key] = values.length > 1 ? values : values[0];
+            } 
+
+        let response0: Response = await fetch(url + "?command=find&collection=dataList"); 
+        let itemResponse: string = await response0.text();
+        let data: ReturnedJSON = JSON.parse(itemResponse);
+
+        let keys: string[] = Object.keys(data.data);
+        let id: string = keys[identifyer];
+
+        let query: URLSearchParams = new URLSearchParams(); 
+        query.set("command", "update");
+        query.set("collection", "dataList");
+        query.set("id", id); 
+        query.set("data", JSON.stringify(json)); 
+        let response1: Response = await fetch(url + "?" + query.toString());
+        let responseText: string = await response1.text();
+        console.log(responseText); 
+
+        if (responseText.includes("success")) {
+            alert("Item deleted!"); 
+        }
+        else {
+            alert("Error! Try again!");
+                }
 
 
     }
