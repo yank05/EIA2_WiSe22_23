@@ -20,7 +20,7 @@ namespace Winterwonderland {
         drawSun({x: 50, y: 50}); 
         drawCloud({x: 250, y: 110}, {x: 90, y: 60}); 
         drawMountains(posMountains, 60, 150);
-        drawForest(); 
+        drawForest({x: 0, y: 450}); 
     }
 
     function drawBackground(): void {
@@ -106,14 +106,14 @@ namespace Winterwonderland {
         crc2.restore();
     }
 
-    function drawForest(): void {
+    function drawForest(_posStart: PosValue): void {
             let numBranches: number = 10;
             let maxRadius: number = 30;
             let branch: Path2D = new Path2D();
             branch.arc(0, 0, maxRadius, 0, 2 * Math.PI);
 
             crc2.save(); 
-            crc2.translate(0, 450); 
+            crc2.translate(_posStart.x, _posStart.y); 
             crc2.fillStyle = "hsl(0, 37%, 16%)";
 
             let counterX: number = 0;
@@ -132,22 +132,19 @@ namespace Winterwonderland {
                 console.log(counterX); 
             } 
             crc2.restore(); 
-            drawTree(); 
+            drawTree({x: 10, y: 440}); 
         } 
    
-    function drawTree(): void {
+    function drawTree(_posStart: PosValue): void {
 
-            let middleBranch: number;
-            let height: number; 
-            let x: number = 10;
-            let y: number = 440; 
+            let x: number = _posStart.x;
+            let y: number = _posStart.y; 
             let lengthLineTotal: number = 30;
             let numTrees: number = 10; 
 
             for (let index: number = 0; index < numTrees; index++) { 
                 if (index == 1 || index == 3 || index == 5 || index == 7 || index == 9)  {
                     y = y + 10; 
-                    console.log("Hallo2"); 
                 }
                 for (let index2: number = 0; index2 < 3;  index2++) {
                     crc2.save(); 
@@ -162,14 +159,12 @@ namespace Winterwonderland {
                     crc2.stroke();
                     crc2.fillStyle = "green";
                     crc2.fill();
-                    crc2.restore(); 
-                    lengthLineTotal--; 
+                    crc2.restore();
                     y = y - 20;        
             } 
                 y = 440; 
                 if (index == 1 || index == 3 || index == 5 || index == 7 || index == 9)  {
                     y = y + 10; 
-                    console.log("Hallo2"); 
                 }
                 lengthLineTotal = 30;
                 for (let index3: number = 0; index3 < 3;  index3++) {
@@ -186,7 +181,7 @@ namespace Winterwonderland {
                     crc2.fillStyle = "green";
                     crc2.fill();
                     crc2.restore(); 
-                    lengthLineTotal--;  
+        
                     y = y - 20;    
                           
             } 
@@ -195,6 +190,8 @@ namespace Winterwonderland {
                 console.log(y); 
             }
                }
+
+
     function randomNumber(_min: number, _max: number): number {
         return Math.floor(Math.random() * _max) + _min;
             }
