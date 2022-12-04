@@ -1,3 +1,11 @@
+/*
+Aufgabe: Birds_L08.2
+Name: Yannik König
+Matrikel: 271124
+Datum: 04.12.2022
+Quellen: drawBirdsSky insipiert von Jonas Atzenhofer
+*/
+
 namespace Winterwonderland {
     window.addEventListener("load", handleLoad);
     let crc2: CanvasRenderingContext2D;
@@ -21,13 +29,16 @@ namespace Winterwonderland {
         drawCloud({x: 250, y: 110}, {x: 90, y: 60}); 
         drawMountains(posMountains, 60, 150);
         drawForest({x: 0, y: 450}); 
+        drawSnowman({x: 100, y: 620}); 
+        drawBirdHouse({x: 280, y: 667}); 
+        drawBirdsSky(); 
     }
 
     function drawBackground(): void {
         let gradient: CanvasGradient = crc2.createLinearGradient(0, 0, 0, crc2.canvas.height);
-        gradient.addColorStop(0, "lightblue");
+        gradient.addColorStop(0, "darkblue");
         gradient.addColorStop(0.6, "white");
-        gradient.addColorStop(1, "white");
+        gradient.addColorStop(1, "lightblue");
 
         crc2.fillStyle = gradient;
         crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
@@ -97,8 +108,9 @@ namespace Winterwonderland {
         crc2.closePath();
 
         let gradient: CanvasGradient = crc2.createLinearGradient(0, 0, 0, -_max);
-        gradient.addColorStop(0, "HSLA(0, 100%, 100%, 0.2)");
-        gradient.addColorStop(1, "HSLA(0, 100%, 100%, 0.7)");
+        gradient.addColorStop(0, "HSLA(199, 10%, 50%, 0.4)");
+        gradient.addColorStop(1, "HSLA(199, 10%, 100%, 1)");
+       
 
         crc2.fillStyle = gradient;
         crc2.fill();
@@ -181,7 +193,6 @@ namespace Winterwonderland {
                     crc2.fillStyle = "green";
                     crc2.fill();
                     crc2.restore(); 
-        
                     y = y - 20;    
                           
             } 
@@ -192,6 +203,141 @@ namespace Winterwonderland {
                }
 
 
+    function drawSnowman(_position: PosValue): void {
+        let facePosition: PosValue = {x: _position.x, y: _position.y - 125}; 
+        crc2.save(); 
+        crc2.translate(_position.x, _position.y);
+
+        crc2.strokeStyle = "white";
+        crc2.fillStyle = "white";
+        crc2.lineWidth = 0;
+
+        crc2.beginPath();
+        crc2.arc(0, 0, 40, 0, 2 * Math.PI);
+        crc2.fill();
+        crc2.stroke();
+        crc2.closePath();
+
+        crc2.beginPath();
+        crc2.arc(0, -70, 30, 0, 2 * Math.PI);
+        crc2.fill();
+        crc2.stroke();
+        crc2.closePath();
+
+        crc2.beginPath();
+        crc2.arc(0, -125, 25, 0, 2 * Math.PI);
+        crc2.fill();
+        crc2.stroke();
+        crc2.closePath();
+
+        crc2.restore();
+
+        crc2.save(); 
+        
+        crc2.translate(facePosition.x, facePosition.y); 
+
+        crc2.fillStyle = "black";
+        crc2.beginPath();
+        crc2.arc(-10, -10, 5, 0, 2 * Math.PI);
+        crc2.fill();
+        crc2.closePath();
+
+        crc2.beginPath();
+        crc2.arc(10, -10, 5, 0, 2 * Math.PI);
+        crc2.fill();
+        crc2.closePath(); 
+
+        crc2.beginPath();
+        crc2.lineWidth = 5;
+        crc2.strokeStyle = "orange";
+        crc2.moveTo(0, 0);
+        crc2.lineTo(15, 10); 
+        crc2.closePath(); 
+        crc2.stroke(); 
+
+        crc2.restore();
+        }
+
+    function drawBirdHouse(_position: PosValue): void {
+        crc2.save();
+        crc2.translate(_position.x, _position.y);
+
+        crc2.strokeStyle = "HSLA(30, 100%, 20%, 1)";
+        crc2.beginPath();
+        crc2.moveTo(20, 0);
+        crc2.lineTo(20, -100);
+        crc2.lineWidth = 10;
+        crc2.stroke(); 
+        crc2.closePath();
+
+        crc2.beginPath();
+        crc2.moveTo(-20, 0);
+        crc2.lineTo(-20, -100);
+        crc2.lineWidth = 10;
+        crc2.stroke(); 
+        crc2.closePath();
+
+        crc2.beginPath();
+        crc2.moveTo(-50, -100);
+        crc2.lineTo(50, -100);
+        crc2.lineWidth = 15;
+        crc2.stroke();
+        crc2.closePath(); 
+
+        crc2.beginPath();
+        crc2.moveTo(-40, -105);
+        crc2.lineTo(-40, -170);
+        crc2.lineTo(40, -105);
+        crc2.moveTo(40, -170);
+        crc2.lineTo(-40, -170); 
+        crc2.lineTo(40, -105); 
+        crc2.fillStyle = "hsla(34, 64%, 14%, 1)";
+        crc2.fill();
+        crc2.closePath(); 
+
+        crc2.beginPath();
+        crc2.moveTo(0, -220);
+        crc2.lineTo(-60, - 150); 
+        crc2.lineWidth = 5;
+        crc2.stroke();
+        crc2.closePath(); 
+
+        crc2.beginPath();
+        crc2.moveTo(0, -220);
+        crc2.lineTo(60, - 150); 
+        crc2.lineWidth = 5;
+        crc2.stroke();
+        crc2.closePath(); 
+
+        crc2.restore(); 
+    }
+
+    function drawBirdsSky(): void {
+    for (let index: number = 0; index < randomNumber(8, 20); index++) {
+        crc2.save();
+        crc2.translate(randomNumber(0, 375), randomNumber(0, 300));
+        crc2.beginPath();
+        crc2.moveTo(0, 0);
+        crc2.bezierCurveTo(0, -10, -10, -10, -20, 0);
+        crc2.moveTo(0, 0);
+        crc2.strokeStyle = "black";
+        crc2.stroke();
+        crc2.closePath();
+
+        crc2.beginPath();
+        crc2.moveTo(0, 0);
+        crc2.bezierCurveTo(0, -10, 10, -10, 20, 0);
+        crc2.moveTo(0, 0);
+        crc2.strokeStyle = "black";
+        crc2.stroke();
+        crc2.closePath();
+
+        crc2.restore();
+
+
+
+        }
+    }
     function randomNumber(_min: number, _max: number): number {
         return Math.floor(Math.random() * _max) + _min;
             }
