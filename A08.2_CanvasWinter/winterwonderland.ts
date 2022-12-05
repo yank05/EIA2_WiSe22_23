@@ -414,13 +414,13 @@ namespace Winterwonderland {
         gradient.addColorStop(0, "hsla(0, 100%, 100%, 1)");
         gradient.addColorStop(1, "hsla(0, 100%, 100%, 0)");
 
+        crc2.save(); 
         crc2.translate(320, 600);
         crc2.fillStyle = gradient;
 
         for (let index: number = 0; index < 50; index++) {
             let x: number = randomNumber(0, 375) * -1;
             let y: number = - randomNumber(0, 667);
-            console.log(x,y); 
             crc2.save();
             crc2.translate(x, y);
             crc2.fill(snowflake);
