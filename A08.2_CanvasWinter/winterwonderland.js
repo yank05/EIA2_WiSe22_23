@@ -3,7 +3,7 @@ Aufgabe: Birds_L08.2
 Name: Yannik König
 Matrikel: 271124
 Datum: 04.12.2022
-Quellen: drawBirdsSky insipiert von Jonas Atzenhofer
+Quellen: drawBirdsSky insipiert von Jonas Atzenhofer, drawBirdsFront von Henning Reck
 */
 var Winterwonderland;
 (function (Winterwonderland) {
@@ -23,6 +23,8 @@ var Winterwonderland;
         drawSnowman({ x: 100, y: 620 });
         drawBirdHouse({ x: 280, y: 667 });
         drawBirdsSky();
+        drawBirdsFront();
+        drawSnowflakes();
     }
     function drawBackground() {
         let gradient = crc2.createLinearGradient(0, 0, 0, crc2.canvas.height);
@@ -274,6 +276,81 @@ var Winterwonderland;
             crc2.closePath();
             crc2.restore();
         }
+    }
+    function drawBirdsFront() {
+        let birdsAmount = 10;
+        let birdsColours = ["hsl(269, 100%, 50%)", "hsl(336, 100%, 50%)", "hsl(19, 100%, 50%)",
+            "hsla(344, 100%, 50%, 1)", "hsla(192, 100%, 50%, 1)", "hsla(58, 100%, 50%, 1)", "hsla(256, 22%, 50%, 1)",
+            "hsla(70, 22%, 50%, 1)", "hsla(7, 22%, 24%, 1)", "hsla(7, 22%, 100%, 1)"];
+        let birdsSize = { x: 375, y: 200 };
+        let birdsDirection = [1, -1];
+        crc2.save();
+        crc2.translate(200, 600);
+        for (let index = 0; index < birdsAmount; index++) {
+            let x = (Math.random() - 0.5) * birdsSize.x;
+            let y = -(Math.random() * birdsSize.y);
+            let randomScale = (Math.random() * .3) + 0.2;
+            crc2.save();
+            crc2.translate(x, y);
+            crc2.scale(randomScale, randomScale);
+            crc2.scale(birdsDirection[Math.floor(Math.random() * (3) - 1)], 1);
+            // Körper
+            crc2.beginPath();
+            crc2.rotate((Math.PI / 180) * 30);
+            crc2.arc(8, 12, 50, 0, 1 * Math.PI, false);
+            crc2.fillStyle = birdsColours[index];
+            crc2.lineWidth = 5;
+            crc2.strokeStyle = "black";
+            crc2.fill();
+            crc2.stroke();
+            // Schnabel
+            crc2.beginPath();
+            crc2.moveTo(-60, 25);
+            crc2.lineTo(-80, 15);
+            crc2.lineTo(-60, -5);
+            crc2.fillStyle = "yellow";
+            crc2.fill();
+            crc2.closePath();
+            // Kopf
+            crc2.beginPath();
+            crc2.arc(0 - 40, 0 + 8, 23, 0, 2 * Math.PI, false);
+            crc2.fillStyle = birdsColours[index + 1];
+            crc2.fill();
+            crc2.stroke();
+            // Bein links
+            crc2.beginPath();
+            crc2.moveTo(15, 60);
+            crc2.lineTo(40, 100);
+            crc2.lineWidth = 5;
+            crc2.stroke();
+            // Bein rechts
+            crc2.beginPath();
+            crc2.moveTo(30, 60);
+            crc2.lineTo(55, 95);
+            crc2.lineWidth = 5;
+            crc2.stroke();
+            crc2.restore();
+        }
+        crc2.restore();
+    }
+    function drawSnowflakes() {
+        let snowflake = new Path2D();
+        let gradient = crc2.createRadialGradient(0, 0, 0, 0, 0, 10);
+        snowflake.arc(0, 0, 10, 0, 2 * Math.PI);
+        gradient.addColorStop(0, "hsla(0, 100%, 100%, 1)");
+        gradient.addColorStop(1, "hsla(0, 100%, 100%, 0)");
+        crc2.translate(320, 600);
+        crc2.fillStyle = gradient;
+        for (let index = 0; index < 50; index++) {
+            let x = randomNumber(0, 375) * -1;
+            let y = -randomNumber(0, 667);
+            console.log(x, y);
+            crc2.save();
+            crc2.translate(x, y);
+            crc2.fill(snowflake);
+            crc2.restore();
+        }
+        crc2.restore();
     }
     function randomNumber(_min, _max) {
         return Math.floor(Math.random() * _max) + _min;
