@@ -14,6 +14,7 @@ var OldMcDonald;
             this.sound = _sound;
         }
         eat() {
+            console.log(this.name + "sings");
             this.food.eat(this.foodAmount);
         }
         sing() {

@@ -14,11 +14,14 @@ namespace OldMcDonald {
             this.sound = _sound; 
         }
         
-        eat(): void {
+        public eat(): void {
+            console.log(this.name + "sings");
+            
             this.food.eat(this.foodAmount); 
+            
         }
 
-        sing(): void {
+        public sing(): void {
         let nameText: HTMLElement = document.getElementById("name");
         nameText.innerHTML = this.name;
         

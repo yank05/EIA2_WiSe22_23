@@ -1,12 +1,10 @@
 namespace OldMcDonald {
     window.addEventListener("load", handleLoad); 
-    
-   
-    
+    let interval: number; 
+    let index: number = 1; 
+    let animals: Animal[] = []; 
 
-
-    export function handleLoad(): void {
-        let animals: Animal[];
+    function handleLoad(): void {
         let foodCow: Food = new Food("Hay", 100); 
         let cow: Animal = new Animal("Tom the Cow", "Cow", foodCow, 10, "Moo");
         animals.push(cow); 
@@ -21,17 +19,30 @@ namespace OldMcDonald {
 
         let foodGoat: Food = new Food("Hay", foodSheep.total); 
         let goat: Animal = new Animal("Arielle the Goat", "Goat", foodGoat, 5, "Bääh");
-        animals.push(goat);
+        animals.push(goat); 
 
         let foodPig: Food = new Food("grains", 75); 
         let pig: Animal = new Animal("Tristan the Pig", "Pig", foodPig, 5, "Oink");
-        animals.push(pig); 
+        animals.push(pig);
 
-        
-        for (let index = 0; index < animals.length; index++) {
-            
+        startSing(); 
+    }
+
+
+
+    function startSing(): void {
+        animals[0].sing();
+        animals[0].eat();
+        interval = setInterval(makeLyrics, 10000);
+    }
+
+    function makeLyrics(): void {
+        animals[index].sing();
+        animals[index].eat();
+        index++; 
+        if (index == 5) {
+            clearInterval(interval); 
         }
-        cow.sing(); 
-        cow.eat();
+
     }
 }
