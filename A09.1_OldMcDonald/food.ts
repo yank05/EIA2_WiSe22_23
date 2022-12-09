@@ -12,6 +12,16 @@ namespace OldMcDonald {
            let newTotal: number = this.total - _foodAmount;
            this.total = newTotal; 
            console.log(this.total); 
+           this.print(_foodAmount); 
+        }
+
+        print(_foodAmount: number): void  {
+            let type: HTMLElement = document.getElementById("type");
+            type.innerHTML = this.type; 
+            let eaten: HTMLElement = document.getElementById("eaten");
+            eaten.innerHTML = _foodAmount.toString(); 
+            let left: HTMLElement = document.getElementById("left");
+            left.innerHTML = this.total.toString();
         }
     }
 }

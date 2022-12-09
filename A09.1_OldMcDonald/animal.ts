@@ -15,10 +15,7 @@ namespace OldMcDonald {
         }
         
         public eat(): void {
-            console.log(this.name + "sings");
-            
             this.food.eat(this.foodAmount); 
-            
         }
 
         public sing(): void {
@@ -30,7 +27,6 @@ namespace OldMcDonald {
 
         for (let index: number = 0; index < 5; index++) {
          let sound: HTMLElement = document.getElementById("sound" + index); 
-         console.log(sound); 
          if (index == 0 || index == 1 || index == 4) {
             sound.innerHTML = this.sound + " " + this.sound; 
          }

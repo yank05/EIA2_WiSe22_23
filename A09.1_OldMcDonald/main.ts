@@ -5,20 +5,18 @@ namespace OldMcDonald {
     let animals: Animal[] = []; 
 
     function handleLoad(): void {
-        let foodCow: Food = new Food("Hay", 100); 
-        let cow: Animal = new Animal("Tom the Cow", "Cow", foodCow, 10, "Moo");
+        let foodHay: Food = new Food("Hay", 100); 
+        let cow: Animal = new Animal("Tom the Cow", "Cow", foodHay, 10, "Moo");
         animals.push(cow); 
 
         let foodDog: Food = new Food("Dog Food", 50); 
         let dog: Animal = new Animal("Billy the Dog", "Dog", foodDog, 2, "Woof");
         animals.push(dog); 
 
-        let foodSheep: Food = new Food("Hay", foodCow.total); 
-        let sheep: Animal = new Animal("Gerlinda the Sheep", "Sheep", foodSheep, 5, "Mööh");
+        let sheep: Animal = new Animal("Gerlinda the Sheep", "Sheep", foodHay, 5, "Mööh");
         animals.push(sheep); 
 
-        let foodGoat: Food = new Food("Hay", foodSheep.total); 
-        let goat: Animal = new Animal("Arielle the Goat", "Goat", foodGoat, 5, "Bääh");
+        let goat: Animal = new Animal("Arielle the Goat", "Goat", foodHay, 5, "Bääh");
         animals.push(goat); 
 
         let foodPig: Food = new Food("grains", 75); 
@@ -27,12 +25,12 @@ namespace OldMcDonald {
 
         startSing(); 
     }
-
-
-
+    
     function startSing(): void {
         animals[0].sing();
         animals[0].eat();
+        console.log(animals); 
+
         interval = setInterval(makeLyrics, 10000);
     }
 
@@ -41,8 +39,28 @@ namespace OldMcDonald {
         animals[index].eat();
         index++; 
         if (index == 5) {
-            clearInterval(interval); 
-        }
+            clearInterval(interval);
+            roleAgain(); 
 
+        }
+    }
+
+    function roleAgain(): void {
+        let div: HTMLElement = document.querySelector("div"); 
+        let againButton: HTMLElement = document.createElement("button");
+        againButton.setAttribute("type", "button"); 
+        againButton.setAttribute("margin", "auto"); 
+        againButton.innerHTML = "Next Day"; 
+        div.appendChild(againButton); 
+
+        index = 1; 
+        againButton.addEventListener("click", restart); 
+    }
+
+    function restart(): void {
+        let div: HTMLElement = document.querySelector("div"); 
+        let againButton: HTMLElement = document.querySelector("button");
+        div.removeChild(againButton); 
+        startSing(); 
     }
 }

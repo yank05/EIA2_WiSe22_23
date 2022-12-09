@@ -14,7 +14,6 @@ var OldMcDonald;
             this.sound = _sound;
         }
         eat() {
-            console.log(this.name + "sings");
             this.food.eat(this.foodAmount);
         }
         sing() {
@@ -24,7 +23,6 @@ var OldMcDonald;
             speciesText.innerHTML = this.species + "s";
             for (let index = 0; index < 5; index++) {
                 let sound = document.getElementById("sound" + index);
-                console.log(sound);
                 if (index == 0 || index == 1 || index == 4) {
                     sound.innerHTML = this.sound + " " + this.sound;
                 }

@@ -5,17 +5,15 @@ var OldMcDonald;
     let index = 1;
     let animals = [];
     function handleLoad() {
-        let foodCow = new OldMcDonald.Food("Hay", 100);
-        let cow = new OldMcDonald.Animal("Tom the Cow", "Cow", foodCow, 10, "Moo");
+        let foodHay = new OldMcDonald.Food("Hay", 100);
+        let cow = new OldMcDonald.Animal("Tom the Cow", "Cow", foodHay, 10, "Moo");
         animals.push(cow);
         let foodDog = new OldMcDonald.Food("Dog Food", 50);
         let dog = new OldMcDonald.Animal("Billy the Dog", "Dog", foodDog, 2, "Woof");
         animals.push(dog);
-        let foodSheep = new OldMcDonald.Food("Hay", foodCow.total);
-        let sheep = new OldMcDonald.Animal("Gerlinda the Sheep", "Sheep", foodSheep, 5, "Mööh");
+        let sheep = new OldMcDonald.Animal("Gerlinda the Sheep", "Sheep", foodHay, 5, "Mööh");
         animals.push(sheep);
-        let foodGoat = new OldMcDonald.Food("Hay", foodSheep.total);
-        let goat = new OldMcDonald.Animal("Arielle the Goat", "Goat", foodGoat, 5, "Bääh");
+        let goat = new OldMcDonald.Animal("Arielle the Goat", "Goat", foodHay, 5, "Bääh");
         animals.push(goat);
         let foodPig = new OldMcDonald.Food("grains", 75);
         let pig = new OldMcDonald.Animal("Tristan the Pig", "Pig", foodPig, 5, "Oink");
@@ -25,6 +23,7 @@ var OldMcDonald;
     function startSing() {
         animals[0].sing();
         animals[0].eat();
+        console.log(animals);
         interval = setInterval(makeLyrics, 10000);
     }
     function makeLyrics() {
@@ -33,7 +32,24 @@ var OldMcDonald;
         index++;
         if (index == 5) {
             clearInterval(interval);
+            roleAgain();
         }
+    }
+    function roleAgain() {
+        let div = document.querySelector("div");
+        let againButton = document.createElement("button");
+        againButton.setAttribute("type", "button");
+        againButton.setAttribute("margin", "auto");
+        againButton.innerHTML = "Next Day";
+        div.appendChild(againButton);
+        index = 1;
+        againButton.addEventListener("click", restart);
+    }
+    function restart() {
+        let div = document.querySelector("div");
+        let againButton = document.querySelector("button");
+        div.removeChild(againButton);
+        startSing();
     }
 })(OldMcDonald || (OldMcDonald = {}));
 //# sourceMappingURL=main.js.map

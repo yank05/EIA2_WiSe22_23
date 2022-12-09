@@ -3,3 +3,17 @@ text-align: center;
 font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 font-size: 15px;
 }
+div {
+    border-style: solid;
+    border-color: black;
+    border-width: 3px; 
+    height: max-content;
+    width: 250px; 
+    margin: auto;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 30px;
+}
