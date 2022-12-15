@@ -13,7 +13,6 @@ var OldMcDonald;
             console.log(this.total);
             this.print(_foodAmount);
         }
-        ;
         print(_foodAmount) {
             let type = document.getElementById("type");
             type.innerHTML = this.type;
