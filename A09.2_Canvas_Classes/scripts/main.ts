@@ -11,6 +11,7 @@ namespace WWL_Classes {
     export let crc2: CanvasRenderingContext2D;
     let snowflakes: Snowflake[] = []; 
     let background: ImageData; 
+    let xStep: number = 0; 
 
     function handleLoad(): void {
         let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
@@ -19,27 +20,28 @@ namespace WWL_Classes {
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
         drawBackground();
         drawTestSnowflake();
-        setInterval(update, 2000); 
+        setInterval(update, 50); 
         // drawBirdsSky(); 
         // drawBirdsFront(); 
         // drawSnowflakes();
     }
 
     function drawTestSnowflake(): void {
-        for (let index: number = 0; index < 2; index++) {
+        for (let index: number = 0; index < 175; index++) {
+            xStep = xStep + 5; 
             let snowflake: Snowflake = new Snowflake(1); 
-            snowflake.form();
+            snowflake.create(xStep); 
             snowflakes.push(snowflake); 
         }
     }
 
     function update(): void {
-        console.log("Update");
         crc2.putImageData(background, 0, 0); 
         crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
         for (let snowflake of snowflakes) {
-            snowflake.move(0.25);
-            snowflake.draw();
+            snowflake.move(1 / 50);
+            // snowflake.draw();
+            console.log("Hallo"); 
         }
 
         // ship.draw();

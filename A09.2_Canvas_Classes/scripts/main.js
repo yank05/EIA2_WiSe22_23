@@ -10,6 +10,7 @@ var WWL_Classes;
     window.addEventListener("load", handleLoad);
     let snowflakes = [];
     let background;
+    let xStep = 0;
     function handleLoad() {
         let canvas = document.querySelector("canvas");
         if (!canvas)
@@ -17,25 +18,26 @@ var WWL_Classes;
         WWL_Classes.crc2 = canvas.getContext("2d");
         drawBackground();
         drawTestSnowflake();
-        setInterval(update, 2000);
+        setInterval(update, 50);
         // drawBirdsSky(); 
         // drawBirdsFront(); 
         // drawSnowflakes();
     }
     function drawTestSnowflake() {
-        for (let index = 0; index < 2; index++) {
+        for (let index = 0; index < 175; index++) {
+            xStep = xStep + 5;
             let snowflake = new WWL_Classes.Snowflake(1);
-            snowflake.form();
+            snowflake.create(xStep);
             snowflakes.push(snowflake);
         }
     }
     function update() {
-        console.log("Update");
         WWL_Classes.crc2.putImageData(background, 0, 0);
         WWL_Classes.crc2.fillRect(0, 0, WWL_Classes.crc2.canvas.width, WWL_Classes.crc2.canvas.height);
         for (let snowflake of snowflakes) {
-            snowflake.move(0.25);
-            snowflake.draw();
+            snowflake.move(1 / 50);
+            // snowflake.draw();
+            console.log("Hallo");
         }
         // ship.draw();
         // handleCollisions();
