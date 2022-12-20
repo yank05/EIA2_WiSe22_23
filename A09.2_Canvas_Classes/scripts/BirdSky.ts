@@ -3,7 +3,7 @@ namespace WWL_Classes {
         position: PosValue; 
         velocity: PosValue;
       
-        constructor(_size: number) {
+        constructor() {
         this.position = new PosValue(160, 200);
         this.velocity = new PosValue(0, 0);
         this.velocity.random(100, 250);
@@ -12,8 +12,7 @@ namespace WWL_Classes {
         move(_step: number): void {
             let offset: PosValue = new PosValue(this.velocity.x, this.velocity.y);
             offset.scale(_step);
-            this.position.add(offset);
-            console.log(this.position.x, this.position.y); 
+            this.position.add(offset); 
 
             if (this.position.x < 0)
                 this.position.x += crc2.canvas.width;
