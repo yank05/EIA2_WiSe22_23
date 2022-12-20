@@ -341,7 +341,7 @@ var WWL_Classes;
     function createBirds() {
         for (let index = 0; index < 15; index++) {
             xStep = xStep + 5;
-            let bird = new WWL_Classes.BirdSky(1);
+            let bird = new WWL_Classes.BirdSky();
             birds.push(bird);
         }
     }

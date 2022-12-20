@@ -3,7 +3,7 @@ var WWL_Classes;
     class BirdSky {
         position;
         velocity;
-        constructor(_size) {
+        constructor() {
             this.position = new WWL_Classes.PosValue(160, 200);
             this.velocity = new WWL_Classes.PosValue(0, 0);
             this.velocity.random(100, 250);
@@ -12,7 +12,6 @@ var WWL_Classes;
             let offset = new WWL_Classes.PosValue(this.velocity.x, this.velocity.y);
             offset.scale(_step);
             this.position.add(offset);
-            console.log(this.position.x, this.position.y);
             if (this.position.x < 0)
                 this.position.x += WWL_Classes.crc2.canvas.width;
             if (this.position.y < 0)

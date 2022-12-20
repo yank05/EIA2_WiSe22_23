@@ -413,7 +413,7 @@ namespace WWL_Classes {
     function createBirds(): void {
         for (let index: number = 0; index < 15; index++) {
             xStep = xStep + 5; 
-            let bird: BirdSky = new BirdSky(1); 
+            let bird: BirdSky = new BirdSky(); 
             birds.push(bird); 
         }
     }
