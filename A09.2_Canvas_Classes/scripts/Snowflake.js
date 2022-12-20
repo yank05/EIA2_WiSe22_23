@@ -12,7 +12,7 @@ var WWL_Classes;
             else
                 this.position = new WWL_Classes.PosValue(0, 0);
             this.velocity = new WWL_Classes.PosValue(0, 0);
-            this.velocity.random(50, 150);
+            this.velocity.random(100, 250);
             this.size = _size;
         }
         create(_xStep) {

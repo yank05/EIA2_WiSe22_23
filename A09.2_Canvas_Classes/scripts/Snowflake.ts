@@ -13,7 +13,7 @@ namespace WWL_Classes {
             this.position = new PosValue(0, 0);
             
         this.velocity = new PosValue(0, 0);
-        this.velocity.random(50, 150);
+        this.velocity.random(100, 250);
         this.size = _size;
     }
 

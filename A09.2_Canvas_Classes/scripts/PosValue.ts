@@ -19,6 +19,7 @@ namespace WWL_Classes {
 
         add(_addend: PosValue): void {
             this.y += _addend.y;
+            this.x += _addend.x;
         }
 
         random(_minLength: number, _maxLength: number): void {

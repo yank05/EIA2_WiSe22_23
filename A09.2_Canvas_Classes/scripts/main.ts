@@ -1,53 +1,35 @@
 /*
-Aufgabe: Birds_L08.2
+Aufgabe: Birds_L09.2
 Name: Yannik König
 Matrikel: 271124
-Datum: 04.12.2022
-Quellen: drawBirdsSky insipiert von Jonas Atzenhofer, drawBirdsFront von Henning Reck
+Datum: 19.12.2022
+Quellen: Henning Reck, Jonas Atzenhofer
 */
 
 namespace WWL_Classes {
     window.addEventListener("load", handleLoad);
-    export let crc2: CanvasRenderingContext2D;
+    export let crc2: CanvasRenderingContext2D;   
+    export let canvas: HTMLCanvasElement | null; 
+
     let snowflakes: Snowflake[] = []; 
+    let birds: BirdSky[] = [];
     let background: ImageData; 
     let xStep: number = 0; 
 
+
     function handleLoad(): void {
-        let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
+        canvas = document.querySelector("canvas");
         if (!canvas)
             return;
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
         drawBackground();
-        drawTestSnowflake();
+        createSnowflakes();
+        createBirds();
         setInterval(update, 50); 
-        // drawBirdsSky(); 
-        // drawBirdsFront(); 
-        // drawSnowflakes();
     }
 
-    function drawTestSnowflake(): void {
-        for (let index: number = 0; index < 175; index++) {
-            xStep = xStep + 5; 
-            let snowflake: Snowflake = new Snowflake(1); 
-            snowflake.create(xStep); 
-            snowflakes.push(snowflake); 
-        }
-    }
 
-    function update(): void {
-        crc2.putImageData(background, 0, 0); 
-        crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
-        for (let snowflake of snowflakes) {
-            snowflake.move(1 / 50);
-            // snowflake.draw();
-            console.log("Hallo"); 
-        }
-
-        // ship.draw();
-        // handleCollisions();
-    }
-
+    // Start the animation
     function drawBackground(): void {
         let posMountains: PosValue = new PosValue(0, 375);
         let sunPos: PosValue = new PosValue(50, 50); 
@@ -64,8 +46,11 @@ namespace WWL_Classes {
         drawForest(forestStart); 
         drawSnowman(snowmanPos);
         drawBirdHouse(birdhousePos); 
+        drawBirdsFront(); 
         background = crc2.getImageData(0, 0, crc2.canvas.width, crc2.canvas.height); 
+    
     }
+
 
     function drawGradient(): void {
         let gradient: CanvasGradient = crc2.createLinearGradient(0, 0, 0, crc2.canvas.height);
@@ -348,122 +333,101 @@ namespace WWL_Classes {
         crc2.restore(); 
     }
 
-    function drawBirdsSky(): void {
-    for (let index: number = 0; index < randomNumber(8, 20); index++) {
-        crc2.save();
-        crc2.translate(randomNumber(0, 375), randomNumber(0, 300));
-        crc2.beginPath();
-        crc2.moveTo(0, 0);
-        crc2.bezierCurveTo(0, -10, -10, -10, -20, 0);
-        crc2.moveTo(0, 0);
-        crc2.strokeStyle = "black";
-        crc2.stroke();
-        crc2.closePath();
+    function drawBirdsFront(): void {
+         
+        let birdsAmount: number = 10;
+        let birdsColours: string[] = ["hsl(269, 100%, 50%)", "hsl(336, 100%, 50%)", "hsl(19, 100%, 50%)", 
+        "hsla(344, 100%, 50%, 1)", "hsla(192, 100%, 50%, 1)", "hsla(58, 100%, 50%, 1)", "hsla(256, 22%, 50%, 1)", 
+        "hsla(70, 22%, 50%, 1)", "hsla(7, 22%, 24%, 1)", "hsla(7, 22%, 100%, 1)"];
+        let birdsSize: PosValue = new PosValue(333, 100); 
 
-        crc2.beginPath();
-        crc2.moveTo(0, 0);
-        crc2.bezierCurveTo(0, -10, 10, -10, 20, 0);
-        crc2.moveTo(0, 0);
-        crc2.strokeStyle = "black";
-        crc2.stroke();
-        crc2.closePath();
+        let birdsDirection: number[] = [1, -1];
+        crc2.save();  
+        crc2.translate(200, 600);
 
+        for (let index: number = 0; index < birdsAmount; index++) {
+            let x: number = (Math.random() - 0.5) * birdsSize.x;
+            let y: number = - (Math.random() * birdsSize.y);
+            let randomScale: number = (Math.random() * .3) + 0.2;
+            crc2.save();
+            crc2.translate(x, y);
+
+            crc2.scale(randomScale, randomScale);
+            crc2.scale(birdsDirection[Math.floor(Math.random() * (3) - 1)], 1);
+
+            // Körper
+            crc2.beginPath();
+            crc2.rotate((Math.PI / 180) * 30);
+            crc2.arc(8, 12, 50, 0, 1 * Math.PI, false);
+            crc2.fillStyle = birdsColours[index];
+            crc2.lineWidth = 5;
+            crc2.strokeStyle = "black";
+            crc2.fill();
+            crc2.stroke();
+
+            // Schnabel
+            crc2.beginPath();
+            crc2.moveTo(-60, 25);
+            crc2.lineTo(-80, 15);
+            crc2.lineTo(-60, -5);
+            crc2.fillStyle = "yellow";
+            crc2.fill();
+
+            crc2.closePath();
+
+            // Kopf
+            crc2.beginPath();
+            crc2.arc(0 - 40, 0 + 8, 23, 0, 2 * Math.PI, false);
+            crc2.fillStyle = birdsColours[index + 1];
+            crc2.fill();
+            crc2.stroke();
+
+            // Bein links
+            crc2.beginPath();
+            crc2.moveTo(15, 60);
+            crc2.lineTo(40, 100);
+            crc2.lineWidth = 5;
+            crc2.stroke();
+
+            // Bein rechts
+            crc2.beginPath();
+            crc2.moveTo(30, 60);
+            crc2.lineTo(55, 95);
+            crc2.lineWidth = 5;
+            crc2.stroke();
+
+            crc2.restore();
+        }
         crc2.restore();
+    }
+
+    function createSnowflakes(): void {
+        for (let index: number = 0; index < 175; index++) {
+            xStep = xStep + 5; 
+            let snowflake: Snowflake = new Snowflake(1); 
+            snowflake.create(xStep); 
+            snowflakes.push(snowflake); 
         }
     }
 
-    // function drawBirdsFront(): void {
-         
-    //         let birdsAmount: number = 10;
-    //         let birdsColours: string[] = ["hsl(269, 100%, 50%)", "hsl(336, 100%, 50%)", "hsl(19, 100%, 50%)", 
-    //         "hsla(344, 100%, 50%, 1)", "hsla(192, 100%, 50%, 1)", "hsla(58, 100%, 50%, 1)", "hsla(256, 22%, 50%, 1)", 
-    //         "hsla(70, 22%, 50%, 1)", "hsla(7, 22%, 24%, 1)", "hsla(7, 22%, 100%, 1)"];
-    //         let birdsSize: PosValue = { x: 375, y: 200 };
-    
-    //         let birdsDirection: number[] = [1, -1];
-    //         crc2.save();  
-    //         crc2.translate(200, 600);
-    
-    //         for (let index: number = 0; index < birdsAmount; index++) {
-    //             let x: number = (Math.random() - 0.5) * birdsSize.x;
-    //             let y: number = - (Math.random() * birdsSize.y);
-    //             let randomScale: number = (Math.random() * .3) + 0.2;
-    //             crc2.save();
-    //             crc2.translate(x, y);
-    
-    //             crc2.scale(randomScale, randomScale);
-    //             crc2.scale(birdsDirection[Math.floor(Math.random() * (3) - 1)], 1);
-    
-    //             // Körper
-    //             crc2.beginPath();
-    //             crc2.rotate((Math.PI / 180) * 30);
-    //             crc2.arc(8, 12, 50, 0, 1 * Math.PI, false);
-    //             crc2.fillStyle = birdsColours[index];
-    //             crc2.lineWidth = 5;
-    //             crc2.strokeStyle = "black";
-    //             crc2.fill();
-    //             crc2.stroke();
-    
-    //             // Schnabel
-    //             crc2.beginPath();
-    //             crc2.moveTo(-60, 25);
-    //             crc2.lineTo(-80, 15);
-    //             crc2.lineTo(-60, -5);
-    //             crc2.fillStyle = "yellow";
-    //             crc2.fill();
-    
-    //             crc2.closePath();
-    
-    //             // Kopf
-    //             crc2.beginPath();
-    //             crc2.arc(0 - 40, 0 + 8, 23, 0, 2 * Math.PI, false);
-    //             crc2.fillStyle = birdsColours[index + 1];
-    //             crc2.fill();
-    //             crc2.stroke();
-    
-    //             // Bein links
-    //             crc2.beginPath();
-    //             crc2.moveTo(15, 60);
-    //             crc2.lineTo(40, 100);
-    //             crc2.lineWidth = 5;
-    //             crc2.stroke();
-    
-    //             // Bein rechts
-    //             crc2.beginPath();
-    //             crc2.moveTo(30, 60);
-    //             crc2.lineTo(55, 95);
-    //             crc2.lineWidth = 5;
-    //             crc2.stroke();
-    
-    //             crc2.restore();
-    //         }
-    //         crc2.restore();
-    //     }
-
-    // function drawSnowflakes(): void {
-    //     let snowflake: Path2D = new Path2D();
-    //     let gradient: CanvasGradient = crc2.createRadialGradient(0, 0, 0, 0, 0, 10);
-
-    //     snowflake.arc(0, 0, 10, 0, 2 * Math.PI);
-    //     gradient.addColorStop(0, "hsla(0, 100%, 100%, 1)");
-    //     gradient.addColorStop(1, "hsla(0, 100%, 100%, 0)");
-
-    //     crc2.save(); 
-    //     crc2.translate(320, 600);
-    //     crc2.fillStyle = gradient;
-
-    //     for (let index: number = 0; index < 50; index++) {
-    //         let x: number = randomNumber(0, 375) * -1;
-    //         let y: number = - randomNumber(0, 667);
-    //         crc2.save();
-    //         crc2.translate(x, y);
-    //         crc2.fill(snowflake);
-    //         crc2.restore();
-    //     }
-    //     crc2.restore();
-    // }
-    function randomNumber(_min: number, _max: number): number {
-        return Math.floor(Math.random() * _max) + _min;
-            }
+    function createBirds(): void {
+        for (let index: number = 0; index < 15; index++) {
+            xStep = xStep + 5; 
+            let bird: BirdSky = new BirdSky(1); 
+            birds.push(bird); 
+        }
     }
+
+    function update(): void {
+        crc2.putImageData(background, 0, 0); 
+        crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
+        for (let snowflake of snowflakes) {
+            snowflake.move(1 / 50); 
+        }
+        for (let bird of birds) {
+            bird.move(1 / 50);
+        }
+    }
+}
+
 

@@ -16,6 +16,7 @@ var WWL_Classes;
         }
         add(_addend) {
             this.y += _addend.y;
+            this.x += _addend.x;
         }
         random(_minLength, _maxLength) {
             let length = _minLength + Math.random() * (_maxLength - _minLength);
