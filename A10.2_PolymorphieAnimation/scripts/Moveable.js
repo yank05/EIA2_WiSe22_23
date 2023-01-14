@@ -3,7 +3,6 @@ var Polymorphism;
     class Moveable {
         position;
         velocity;
-        update;
         constructor(_position, _velocity) {
             this.position = _position.copy();
             if (_velocity) {
@@ -11,7 +10,6 @@ var Polymorphism;
             }
             else
                 this.velocity = new Polymorphism.PosValue(0, 0);
-            this.update = true;
         }
     }
     Polymorphism.Moveable = Moveable;
