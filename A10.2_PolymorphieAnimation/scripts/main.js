@@ -1,14 +1,14 @@
 /*
-Aufgabe: Polymorphie_L09.2
+Aufgabe: Polymorphie_L10.2
 Name: Yannik König
 Matrikel: 271124
-Datum: 12.01.2023
-Quellen: Henning Reck, Jonas Atzenhofer
+Datum: 14.01.2023
+Quellen: Jonas Atzenhofer
 */
 var Polymorphism;
 (function (Polymorphism) {
     window.addEventListener("load", handleLoad);
-    let Moveables = [];
+    let moveables = [];
     let background;
     let xStep = 0;
     function handleLoad() {
@@ -17,33 +17,9 @@ var Polymorphism;
             return;
         Polymorphism.crc2 = Polymorphism.canvas.getContext("2d");
         drawBackground();
+        createBirds();
         createSnowflakes();
-        // createBirds();
         setInterval(update, 50);
-    }
-    function createSnowflakes() {
-        for (let index = 0; index < 175; index++) {
-            Moveables.push(new Polymorphism.Snowflake(new Polymorphism.PosValue(0, 0), new Polymorphism.PosValue(0, 0)));
-        }
-    }
-    // function createBirds(): void {
-    //     for (let index: number = 0; index < 15; index++) {
-    //         xStep = xStep + 5; 
-    //         let bird: BirdSky = new BirdSky(); 
-    //         Moveable.push(bird); 
-    //     }
-    // }
-    function update() {
-        Polymorphism.crc2.putImageData(background, 0, 0);
-        Polymorphism.crc2.fillRect(0, 0, Polymorphism.crc2.canvas.width, Polymorphism.crc2.canvas.height);
-        for (let index = 0; index < Moveables.length; index++) {
-            let snowflake = Moveables[index];
-            snowflake.move(1 / 50);
-            snowflake.draw(snowflake.object);
-        }
-        // for (let bird of Moveable) {
-        //     bird.move(1 / 50);
-        // }
     }
     // Start the animation
     function drawBackground() {
@@ -352,6 +328,36 @@ var Polymorphism;
             Polymorphism.crc2.restore();
         }
         Polymorphism.crc2.restore();
+    }
+    function createSnowflakes() {
+        for (let index = 0; index < 275; index++) {
+            xStep = xStep + 2;
+            let snowflake = new Polymorphism.Snowflake(1, new Polymorphism.PosValue(xStep, 0));
+            snowflake.create();
+            moveables.push(snowflake);
+        }
+    }
+    function createBirds() {
+        for (let index = 0; index < 25; index++) {
+            let velocity = new Polymorphism.PosValue(0, 0);
+            velocity.random(100, 250);
+            let bird = new Polymorphism.BirdSky(new Polymorphism.PosValue(160, 200), velocity);
+            moveables.push(bird);
+        }
+        console.log("pups");
+    }
+    function update() {
+        console.log(moveables);
+        Polymorphism.crc2.putImageData(background, 0, 0);
+        Polymorphism.crc2.fillRect(0, 0, Polymorphism.crc2.canvas.width, Polymorphism.crc2.canvas.height);
+        for (let Moveable of moveables) {
+            if (Moveable instanceof Polymorphism.Snowflake) {
+                Moveable.move(1 / 50);
+            }
+            if (Moveable instanceof Polymorphism.BirdSky) {
+                Moveable.fly(1 / 50);
+            }
+        }
     }
 })(Polymorphism || (Polymorphism = {}));
 //# sourceMappingURL=main.js.map

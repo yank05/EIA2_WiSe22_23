@@ -1,7 +1,9 @@
 namespace Polymorphism {
     export class BirdSky extends Moveable {
+        declare position: PosValue;
+        declare velocity: PosValue;
       
-        move(_step: number): void {
+        fly(_step: number): void {
             let offset: PosValue = new PosValue(this.velocity.x, this.velocity.y);
             offset.scale(_step);
             this.position.add(offset); 

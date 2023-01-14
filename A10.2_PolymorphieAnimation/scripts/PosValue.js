@@ -18,6 +18,9 @@ var Polymorphism;
             this.y += _addend.y;
             this.x += _addend.x;
         }
+        copy() {
+            return new PosValue(this.x, this.y);
+        }
         random(_minLength, _maxLength) {
             let length = _minLength + Math.random() * (_maxLength - _minLength);
             let direction = Math.random() * 2 * Math.PI;

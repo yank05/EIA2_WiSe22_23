@@ -21,6 +21,9 @@ namespace Polymorphism {
             this.y += _addend.y;
             this.x += _addend.x;
         }
+        copy(): PosValue {
+            return new PosValue(this.x, this.y);
+        }
 
         random(_minLength: number, _maxLength: number): void {
             let length: number = _minLength + Math.random() * (_maxLength - _minLength);

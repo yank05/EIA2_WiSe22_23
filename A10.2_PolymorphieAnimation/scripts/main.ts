@@ -1,9 +1,9 @@
 /*
-Aufgabe: Polymorphie_L09.2
+Aufgabe: Polymorphie_L10.2
 Name: Yannik König
 Matrikel: 271124
-Datum: 12.01.2023
-Quellen: Henning Reck, Jonas Atzenhofer
+Datum: 14.01.2023
+Quellen: Jonas Atzenhofer
 */
 
 namespace Polymorphism {
@@ -11,7 +11,7 @@ namespace Polymorphism {
     export let crc2: CanvasRenderingContext2D;   
     export let canvas: HTMLCanvasElement | null; 
 
-    let Moveables: Moveable[] = []; 
+    let moveables: Moveable[] = []; 
     let background: ImageData; 
     let xStep: number = 0; 
 
@@ -22,38 +22,11 @@ namespace Polymorphism {
             return;
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
         drawBackground();
+        createBirds();
         createSnowflakes();
-        // createBirds();
         setInterval(update, 50); 
     }
 
-    
-    function createSnowflakes(): void {
-        for (let index: number = 0; index < 175; index++) {
-            Moveables.push(new Snowflake(new PosValue(0, 0), new PosValue(0, 0)));
-        }
-    }
-
-    // function createBirds(): void {
-    //     for (let index: number = 0; index < 15; index++) {
-    //         xStep = xStep + 5; 
-    //         let bird: BirdSky = new BirdSky(); 
-    //         Moveable.push(bird); 
-    //     }
-    // }
-
-    function update(): void {
-        crc2.putImageData(background, 0, 0); 
-        crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
-        for (let index = 0; index < Moveables.length; index++) {
-            let snowflake: Snowflake = <Snowflake>Moveables[index];
-            snowflake.move(1 / 50); 
-            snowflake.draw(snowflake.object); 
-        }
-        // for (let bird of Moveable) {
-        //     bird.move(1 / 50);
-        // }
-    }
 
     // Start the animation
     function drawBackground(): void {
@@ -426,6 +399,40 @@ namespace Polymorphism {
         }
         crc2.restore();
     }
+
+     
+    function createSnowflakes(): void {
+        for (let index: number = 0; index < 275; index++) {
+                xStep = xStep + 2;
+                let snowflake: Snowflake = new Snowflake(1, new PosValue(xStep, 0));
+                snowflake.create();
+                moveables.push(snowflake);
+    }
+}
+    function createBirds(): void {
+        for (let index: number = 0; index < 25; index++) {
+            let velocity: PosValue = new PosValue(0, 0); 
+            velocity.random(100, 250); 
+
+            let bird: BirdSky = new BirdSky(new PosValue(160, 200), velocity); 
+            moveables.push(bird); 
+        }
+        console.log("pups"); 
+    }
+
+    function update(): void {
+        console.log(moveables);
+        crc2.putImageData(background, 0, 0); 
+        crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height);
+        for (let Moveable of moveables) {
+            if (Moveable instanceof Snowflake) {
+                Moveable.move(1 / 50);
+        }
+            if (Moveable instanceof BirdSky) {
+                Moveable.fly(1 / 50);
+            }
+    }
+}
 }
 
 
