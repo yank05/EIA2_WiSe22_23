@@ -3,7 +3,7 @@ namespace Polymorphism {
         declare position: PosValue;
         declare velocity: PosValue;
       
-        fly(_step: number): void {
+        move(_step: number): void {
             let offset: PosValue = new PosValue(this.velocity.x, this.velocity.y);
             offset.scale(_step);
             this.position.add(offset); 

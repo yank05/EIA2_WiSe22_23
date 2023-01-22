@@ -429,7 +429,7 @@ namespace Polymorphism {
                 Moveable.move(1 / 50);
         }
             if (Moveable instanceof BirdSky) {
-                Moveable.fly(1 / 50);
+                Moveable.move(1 / 50);
             }
     }
 }
