@@ -1,7 +1,7 @@
 var Polymorphism;
 (function (Polymorphism) {
     class BirdSky extends Polymorphism.Moveable {
-        fly(_step) {
+        move(_step) {
             let offset = new Polymorphism.PosValue(this.velocity.x, this.velocity.y);
             offset.scale(_step);
             this.position.add(offset);

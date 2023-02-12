@@ -29,7 +29,9 @@ var ShoppingList_06;
         let keys = Object.keys(_data.data);
         for (let index = 0; index < keys.length; index++) {
             let item = _data.data[keys[index]];
+            console.log(item);
             let text = Object.values(item);
+            console.log(text);
             let newItem = text[0];
             let amount = parseInt(text[1]);
             let comment = text[2];

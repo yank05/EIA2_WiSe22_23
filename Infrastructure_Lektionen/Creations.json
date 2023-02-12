@@ -1,0 +1,30 @@
+{
+    "63e9221287621": {
+        "color": "#f50000",
+        "length": "1303",
+        "range": "2",
+        "strength": "74",
+        "name": "Boooooom"
+    },
+    "63e9223a5689c": {
+        "color": "#f50000",
+        "length": "1500",
+        "range": "6",
+        "strength": "100",
+        "name": "gro\u00df"
+    },
+    "63e92254251b1": {
+        "color": "#00f53d",
+        "length": "300",
+        "range": "1",
+        "strength": "0",
+        "name": "klein"
+    },
+    "63e922b476a24": {
+        "color": "#4dff00",
+        "length": "300",
+        "range": "1",
+        "strength": "50",
+        "name": "klein"
+    }
+}

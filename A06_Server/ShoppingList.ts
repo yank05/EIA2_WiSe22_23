@@ -55,7 +55,9 @@ namespace ShoppingList_06 {
         for (let index: number = 0; index < keys.length; index++) {
 
         let item: string[] = _data.data[keys[index]];  
+        console.log(item); 
         let text: string[] = Object.values(item); 
+        console.log(text); 
 
         let newItem: string = text[0];
         let amount: number = parseInt(text[1]);
