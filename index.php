@@ -13,7 +13,6 @@
  */
   header('Access-Control-Allow-Origin: *');
   header('Access-Control-Allow-Headers: *');
-  header('Access-Control-Allow-Origin: "https://webuser.hs-furtwangen.de/~koenigya/Database/data.json"');
   error_reporting(E_ERROR);
   
   $command = $_GET["command"];
